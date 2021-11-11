@@ -145,6 +145,247 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/05/PHP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/05/PHP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">PHP学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-05 15:50:43" itemprop="dateCreated datePublished" datetime="2021-11-05T15:50:43+08:00">2021-11-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-09 10:50:13" itemprop="dateModified" datetime="2021-11-09T10:50:13+08:00">2021-11-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="一些基础知识"><a href="#一些基础知识" class="headerlink" title="一些基础知识"></a>一些基础知识</h1><ol>
+<li><h2 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h2><p><em>PHP</em> 变量由 <strong>$</strong> 符号开始, 后跟着变量名称, 且 <strong>不用事先声明</strong> , 如: </p>
+</li>
+</ol>
+ <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$txt</span>=<span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line"><span class="variable">$x</span>=<span class="number">5</span>;</span><br><span class="line"><span class="variable">$y</span>=<span class="variable">$x</span>*<span class="number">2</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$txe</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$y</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><h2 id="Global-关键字"><a href="#Global-关键字" class="headerlink" title="Global 关键字"></a><strong>Global 关键字</strong></h2></li>
+</ol>
+<p>   <em>global</em> 关键字用于函数内访问全局变量, 如</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$x</span>=<span class="number">5</span>;</span><br><span class="line"><span class="variable">$y</span>=<span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myTest</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">global</span> <span class="variable">$x</span>,<span class="variable">$y</span>;</span><br><span class="line">	<span class="variable">$y</span>=<span class="variable">$x</span>+<span class="variable">$y</span>;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    或者可以这样写:</span></span><br><span class="line"><span class="comment">    $GLOBAL[&#x27;y&#x27;]=$GLOBAL[&#x27;x&#x27;]+$GLOBAL[&#x27;y&#x27;];</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">myTest();</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$y</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    输出为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">15</span></span><br></pre></td></tr></table></figure>
+
+<p>​    <em>php</em> 将所有的全局变量存储在 名为 <em>GLOBAL</em> 的数组中, 则可以写成第二种写法</p>
+<ol start="3">
+<li><h2 id="static-关键字"><a href="#static-关键字" class="headerlink" title="static 关键字"></a><strong>static</strong> 关键字</h2><p>若希望局部变量不被删除, 则需要使用 <em>static</em> 关键字来声明 ( 但本质上还是一个局部变量 ), 如:</p>
+</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myTest</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">static</span> <span class="variable">$x</span>=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$x</span>;</span><br><span class="line">    <span class="variable">$x</span>++;</span><br><span class="line">    <span class="keyword">echo</span> PHP_EOL;    <span class="comment">// 换行符</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">myTest();</span><br><span class="line">myTest();</span><br><span class="line">myTest();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    如此, 则变量 <strong>x</strong> 在被调用结束后仍然会保留, 下一次调用时 <em>x</em> 的值为上次调用结束时的值</p>
+<ol start="4">
+<li><h2 id="echo-和-print-语句"><a href="#echo-和-print-语句" class="headerlink" title="echo 和 print 语句"></a><em>echo</em> 和 <em>print</em> 语句</h2><ol>
+<li><h3 id="echo"><a href="#echo" class="headerlink" title="echo"></a><strong>echo</strong></h3></li>
+</ol>
+<p>   <em>echo</em> 输出的速度更快, 没有返回值, 使用时可以自选加不加 <em>()</em> ,</p>
+<p>   <strong>输出字符串</strong> (可以包含 <em>HTML</em> 标签)</p>
+</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;h2&gt;差不多得了&lt;/h2&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;哈哈&quot;</span>, <span class="string">&quot;可以&quot;</span>, <span class="string">&quot;多个&quot;</span>, <span class="string">&quot;一起&quot;</span>, <span class="string">&quot;输出&quot;</span>, <span class="string">&quot;, 你就说行不行吧&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​            <strong>输出变量和字符串</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$txt1</span>=<span class="string">&quot;我是菜鸟&quot;</span>;</span><br><span class="line"><span class="variable">$txt2</span>=<span class="string">&quot;想寄就寄&quot;</span>;</span><br><span class="line"><span class="variable">$php_love</span>=<span class="keyword">array</span>(<span class="string">&quot;PHP&quot;</span>, <span class="string">&quot;狗都&quot;</span>, <span class="string">&quot;不用&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$txt1</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;我,<span class="subst">$txt2</span>&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;<span class="subst">&#123;$php_love[0]&#125;</span> 是世界上最好的语言!&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-print"><a href="#2-print" class="headerlink" title="2. print"></a>2. <strong>print</strong></h3><p>​            <em>print</em> 有返回值，为 <em>1</em></p>
+<p>​            <strong>输出字符串</strong>  (同样可以包含 <em>HTML</em> 标签)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;&lt;h2&gt;差不多得了&lt;/h2&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;哈哈&quot;</span>;</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;一次只能&quot;</span>；</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;输出&quot;</span>；</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;一个&quot;</span>；</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;字符串捏&quot;</span>；</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1 id="一些高级一点的知识"><a href="#一些高级一点的知识" class="headerlink" title="一些高级一点的知识"></a>一些高级一点的知识</h1><hr>
+<ol>
+<li><h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><ol>
+<li><h3 id="类的定义"><a href="#类的定义" class="headerlink" title="类的定义"></a>类的定义</h3></li>
+</ol>
+<p>​    <strong>类</strong> 使用关键词 <em><strong>class</strong></em> 加类名进行定义 (<strong>类</strong> 中的定义、函数等的定义均和主函数中相同) , 定义方式如下: </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">phpClass</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> <span class="variable">$var1</span>;</span><br><span class="line">  <span class="keyword">var</span> <span class="variable">$var2</span> = <span class="string">&quot;constant string&quot;</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">myfunc</span> (<span class="params"><span class="variable">$arg1</span>, <span class="variable">$arg2</span></span>) </span>&#123;</span><br><span class="line">     [..]</span><br><span class="line">  &#125;</span><br><span class="line">  [..]</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<ol start="2">
+<li><h2 id="gt-gt-和-this-self-parent"><a href="#gt-gt-和-this-self-parent" class="headerlink" title="-&gt; =&gt; :: 和  this self parent"></a><strong>-&gt; =&gt; ::</strong> 和  <strong>this self parent</strong></h2><ol>
+<li><h3 id="this-self-parent"><a href="#this-self-parent" class="headerlink" title="**this  self  parent **"></a>**this  self  parent **</h3></li>
+</ol>
+<h4 id="this"><a href="#this" class="headerlink" title="this:"></a><strong>this</strong>:</h4><p>​    即, <strong>当前对象</strong>  例:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">$this</span> -&gt; name;</span><br><span class="line"><span class="keyword">$this</span> -&gt; name();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Website</span></span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">$this</span> -&gt; name = <span class="variable">$name</span>;</span><br><span class="line">            <span class="keyword">$this</span> -&gt; name();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">name</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="keyword">$this</span> -&gt; name.<span class="string">&#x27;&lt;br&gt;&#x27;</span>;</span><br><span class="line">            <span class="keyword">$this</span> -&gt; url();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">url</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&#x27;http://c.biancheng.net/php/&lt;br&gt;&#x27;</span>;</span><br><span class="line">            <span class="keyword">$this</span> -&gt; title();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">title</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&#x27;PHP入门教程&lt;br&gt;&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$object</span> = <span class="keyword">new</span> Website(<span class="string">&#x27;C语言中文网&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>​    第一句访问当前成员的 <em>name</em> 属性, 第二句对当前成员调用类中的 <em>name()</em> 方法 (即调用函数)</p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><ol start="2">
+<li><h3 id="gt-gt"><a href="#gt-gt" class="headerlink" title="**-&gt; =&gt; :: **"></a>**-&gt; =&gt; :: **</h3></li>
+</ol>
+<h4 id="gt-插入式解引用操作符"><a href="#gt-插入式解引用操作符" class="headerlink" title="-&gt; (插入式解引用操作符)"></a><strong>-&gt; (插入式解引用操作符)</strong></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span>-&gt;b</span><br></pre></td></tr></table></figure>
+
+<p>​    取对象 <strong>a</strong> 的 <strong>b</strong> 属性</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span>-&gt;b(<span class="variable">$c</span>)</span><br></pre></td></tr></table></figure>
+
+<p>​    调用对象 <strong>a</strong> 的 <strong>b</strong> 方法, 方法中传入一个参数 <strong>$c</strong> </p>
+<h4 id="gt-在数组中用"><a href="#gt-在数组中用" class="headerlink" title="**=&gt; (在数组中用) **"></a>**=&gt; (在数组中用) **</h4><p>用于操作数组中的数据: </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$phparr</span>= <span class="keyword">new</span> <span class="keyword">array</span>( in =&gt; <span class="string">&#x27;reply,&#x27;</span></span><br><span class="line">side =&gt; <span class="string">&#x27;left&#x27;</span>,</span><br><span class="line">padx =&gt; <span class="number">2</span>m,</span><br><span class="line">pady =&gt; <span class="number">2</span>m,</span><br><span class="line">ipadx =&gt; <span class="number">2</span>m,</span><br><span class="line">ipady =&gt; <span class="number">1</span>m</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="范围解释操作符-域运算符"><a href="#范围解释操作符-域运算符" class="headerlink" title=":: ( 范围解释操作符 / 域运算符 )**"></a>:: ( 范围解释操作符 / 域运算符 )**</h4><p>​    用于调用类的 <strong>内部静态成员</strong> 或者 <strong>类之间</strong> 的调用:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/04/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/04/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">反序列化学习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-04 13:42:16" itemprop="dateCreated datePublished" datetime="2021-11-04T13:42:16+08:00">2021-11-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-07 15:04:57" itemprop="dateModified" datetime="2021-11-07T15:04:57+08:00">2021-11-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>先学习一下 <em>php</em> 中的反序列化, 以后再学学其他语言里面的</p>
+</blockquote>
+<h1 id="什么是序列化与反序列化"><a href="#什么是序列化与反序列化" class="headerlink" title="什么是序列化与反序列化"></a>什么是序列化与反序列化</h1><h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">serialize()			<span class="comment">// 将对象转换成字符串</span></span><br><span class="line">unserialize()		<span class="comment">// 将字符串还原成一个对象</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>示例:</strong></p>
+<p><em>序列化</em></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">test</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="variable">$flag</span> = <span class="string">&quot;flag&#123;233&#125;&quot;</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="variable">$a</span> = <span class="string">&quot;aaa&quot;</span>;</span><br><span class="line">        <span class="built_in">static</span> <span class="variable">$b</span> = <span class="string">&quot;bbb&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$test</span> = <span class="keyword">new</span> test;</span><br><span class="line">    <span class="variable">$data</span> = serialize(<span class="variable">$test</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$data</span>;</span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    输出</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:<span class="number">4</span>:<span class="string">&quot;test&quot;</span>:<span class="number">2</span>:&#123;s:<span class="number">10</span>:<span class="string">&quot;testflag&quot;</span>;s:<span class="number">9</span>:<span class="string">&quot;flag&#123;233&#125;&quot;</span>;s:<span class="number">1</span>:<span class="string">&quot;a&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;aaa&quot;</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    <em>O:4:”test”</em>  =  *Object (对象) * 4个字符: test</p>
+<p>​    <em>:2</em> = 对象属性个数为2</p>
+<p>​    <em>{}</em> = 属性的字符数 : 属性值</p>
+<p>​    PS: <em>s:10:”testflag”</em> 字符数为10是因为其为 <strong>private</strong> 属性, 会在两侧加入空字节 (即 <em>%00</em> ), 所以在反序列化时 <strong>要补齐两个空字节</strong> </p>
+<p><em>反序列化</em></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">    <span class="variable">$str</span> = <span class="string">&#x27;O%3A4%3A%22test%22%3A2%3A%7Bs%3A10%3A%22%00test%00flag%22%3Bs%3A9%3A%22flag%7B233%7D%22%3Bs%3A1%3A%22a%22%3Bs%3A3%3A%22aaa%22%3B%7D&#x27;</span>;</span><br><span class="line">    <span class="variable">$data</span> = urldecode(<span class="variable">$str</span>);</span><br><span class="line">    <span class="variable">$obj</span> = unserialize(<span class="variable">$data</span>);</span><br><span class="line"></span><br><span class="line">    var_dump(<span class="variable">$obj</span>);</span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    输出:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">object</span>(<span class="built_in">__PHP_Incomplete_Class</span>)<span class="comment">#1 (3) &#123; [&quot;__PHP_Incomplete_Class_Name&quot;]=&gt; string(4) &quot;test&quot; [&quot;flag&quot;:&quot;test&quot;:private]=&gt; string(9) &quot;flag&#123;233&#125;&quot; [&quot;a&quot;]=&gt; string(3) &quot;aaa&quot; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    ( 貌似 <em>private</em> 类型才会被单独标注出来 )</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/03/JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -293,7 +534,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-03 14:26:34" itemprop="dateModified" datetime="2021-11-03T14:26:34+08:00">2021-11-03</time>
+                <time title="修改时间：2021-11-11 15:38:12" itemprop="dateModified" datetime="2021-11-11T15:38:12+08:00">2021-11-11</time>
               </span>
 
           
@@ -344,7 +585,7 @@
 <p>   上传成功后连蚁剑就完事了</p>
 <hr>
 <h4 id="htaccess"><a href="#htaccess" class="headerlink" title=".htaccess"></a>.htaccess</h4><blockquote>
-<p>htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能                                                                                     – From 题目</p>
+<p>htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能                                                                         – From 题目</p>
 </blockquote>
 <p>​    还没开, 先看看提示, 发现有一个改变文件扩展名, 是否能从这里下手呢? </p>
 <p>​    多的不说, 先看源码</p>
@@ -363,26 +604,18 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MIME(Multipurpose Internet Mail Extensions)多用途互联网邮件扩展类型。</span><br><span class="line">是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。</span><br></pre></td></tr></table></figure>
 
 <p>​    说人话就是为某种文件设置默认打开程序, 常见的 MIME 类型如下</p>
-<ol>
-<li><p>text/plain (纯文本)</p>
-</li>
-<li><p>text/html ( HTML 文档)</p>
-</li>
-<li><p>text/javascript ( js 代码)</p>
-</li>
-<li><p>application/xhtml+xml ( XHTML 文档)</p>
-</li>
-<li><p>image/gif ( GIF 图像)</p>
-</li>
-<li><p>image/jpeg ( JPEG 图像)</p>
-</li>
-<li><p>image/png ( PNG 图像)</p>
-</li>
-<li><p>video/mpeg ( MPEG 动画)</p>
-</li>
-<li><p>application/octet-stream (二进制数据)</p>
-</li>
-<li><p>application/pdf ( PDF 文档)</p>
+<ul>
+<li>text/plain (纯文本)</li>
+<li>text/html ( HTML 文档)</li>
+<li>text/javascript ( js 代码)</li>
+<li>application/xhtml+xml ( XHTML 文档)</li>
+<li>image/gif ( GIF 图像)</li>
+<li>image/jpeg ( JPEG 图像)</li>
+<li>image/png ( PNG 图像)</li>
+<li>video/mpeg ( MPEG 动画)</li>
+<li>application/octet-stream (二进制数据)</li>
+<li>application/pdf ( PDF 文档)</li>
+</ul>
 <p><strong>绕过原理</strong>     <del>大黑客来辣</del></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">部分Web应用系统判定文件类型是通过content-type字段，黑客可以通过抓包，将content-type字段改为常见的图片类型，如image/gif，从而绕过校验。</span><br></pre></td></tr></table></figure>
 
@@ -392,8 +625,6 @@
 <p>​    burp 抓包获得如下信息 </p>
 <p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211102203123593.png" alt="image-20211102203123593"> </p>
 <p>​    改变 <strong>第19行</strong> 就能成事儿 ,然后就是连连看了</p>
-</li>
-</ol>
 <hr>
 <h4 id="文件头检查"><a href="#文件头检查" class="headerlink" title="文件头检查"></a>文件头检查</h4><p>​    源码看不如不看, skip</p>
 <p>​    国际惯例, 莽传一手. 情理之中的没有传上去, 提示:</p>
@@ -411,6 +642,138 @@
 <p>png : 89 50 4E 47 </p>
 </blockquote>
 <p>​    <strong>完整过程</strong>: 先用 <em>010Editor</em> 把 <em>attack.php</em> 的头加点东西, 识别成png格式, 然后再把后缀名改成 <em>.php</em> 上传, burp抓包把后缀改回 <em>.php</em>, 然后蚁剑上</p>
+<hr>
+<h3 id="00截断"><a href="#00截断" class="headerlink" title="00截断"></a>00截断</h3><blockquote>
+<p>了解一下 PHP 5.2 00截断上传的原理         –From 题目</p>
+</blockquote>
+<p>源码如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;CTFHub 文件上传 - 00截断&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h1&gt;CTFHub 文件上传 - 00截断&lt;/h1&gt;</span><br><span class="line">    &lt;form action=?road=/var/www/html/upload/ method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">        &lt;label for=&quot;file&quot;&gt;Filename:&lt;/label&gt;</span><br><span class="line">        &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;file&quot; /&gt;</span><br><span class="line">        &lt;br /&gt;</span><br><span class="line">        &lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Submit&quot; /&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">if (!empty($_POST[&#x27;submit&#x27;])) &#123;</span><br><span class="line">    $name = basename($_FILES[&#x27;file&#x27;][&#x27;name&#x27;]);</span><br><span class="line">    $info = pathinfo($name);</span><br><span class="line">    $ext = $info[&#x27;extension&#x27;];</span><br><span class="line">    $whitelist = array(&quot;jpg&quot;, &quot;png&quot;, &quot;gif&quot;);</span><br><span class="line">    if (in_array($ext, $whitelist)) &#123;</span><br><span class="line">        $des = $_GET[&#x27;road&#x27;] . &quot;/&quot; . rand(10, 99) . date(&quot;YmdHis&quot;) . &quot;.&quot; . $ext;</span><br><span class="line">        if (move_uploaded_file($_FILES[&#x27;file&#x27;][&#x27;tmp_name&#x27;], $des)) &#123;</span><br><span class="line">            echo &quot;&lt;script&gt;alert(&#x27;上传成功&#x27;)&lt;/script&gt;&quot;;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            echo &quot;&lt;script&gt;alert(&#x27;上传失败&#x27;)&lt;/script&gt;&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        echo &quot;文件类型不匹配&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">--&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>​    注意到注释中的判断语句, 介绍一下其中包含的几个函数</p>
+<ol>
+<li><p><strong>basename()</strong></p>
+<p>用于返回文件名,用法如下:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">basename(path, suffix)</span><br></pre></td></tr></table></figure>
+
+<p>其中, <em>path</em> 必需, 用于明确文件路径; <em>suffix</em> 为可选, 规定文件拓展名,若所打开的文件的拓展名与其相同, 则不会显示该拓展名. 实例:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$path</span> = <span class="string">&quot;/user/remake.php&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> basename(<span class="variable">$path</span>).<span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> basename(<span class="variable">$path</span>,<span class="string">&quot;.php&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>运行该代码, 则会输出:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">remake.php</span><br><span class="line">remake</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>pathinfo()</strong></p>
+<p>用于以数组的形式返回关于文件路径的信息, 数组中的返回元素如下:</p>
+<ul>
+<li>[dirname]: 目录路径</li>
+<li>[basename]: 文件名 (完整)</li>
+<li>[extension]: 文件后缀名</li>
+<li>[filename]: 文件名 (不含后缀)</li>
+</ul>
+<p>用法为:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pathinfo(path,options)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>path* 必需, 明确路径; </li>
+<li><em>options</em> 可选, 固定要返回的元素, 不填默认 all, 可填: <ul>
+<li><em>PATHINFO_DIRNAME</em> (只返回 dirname)  </li>
+<li><em>PATHINFO_BASENAME</em> (只返回 basename) </li>
+<li><em>PATHINFO_EXTENSION</em> (只返回 extension) </li>
+<li>PATHINFO_FILENAME (只返回 filename)</li>
+</ul>
+</li>
+</ul>
+<p>实例1:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">print_r(pathinfo(<span class="string">&quot;/user/remake.php&quot;</span>));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Array</span></span><br><span class="line">(</span><br><span class="line">	[dirname] =&gt; /user</span><br><span class="line">	[basename] =&gt; remake.php</span><br><span class="line">	[extension] =&gt; php</span><br><span class="line">	[filename] =&gt; remake</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>实例2:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">print_r(pathinfo(<span class="string">&quot;/user/remake.php&quot;</span>,PATHINFO_BASENAEM));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">remake.php</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ol start="3">
+<li><p><strong>date()</strong></p>
+<p>用于格式化日期与时间, 如何格式化详见 <a target="_blank" rel="noopener" href="https://www.runoob.com/php/php-date.html">Date()函数</a> </p>
+</li>
+<li><p><strong>move_uploaded_file()</strong> </p>
+<p>将文件移动到指定位置, 执行成功返回 <em>true</em>, 失败返回 <em>false</em> </p>
+<p>用法:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">move_uploaded_file(file, target)</span><br></pre></td></tr></table></figure>
+
+<p>file: 必需, 被移动的文件的文件名; target: 必需, 移动到的路径</p>
+<p>回到题目, 看到这句代码:</p>
+</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$des</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;road&#x27;</span>] . <span class="string">&quot;/&quot;</span> . rand(<span class="number">10</span>, <span class="number">99</span>) . date(<span class="string">&quot;YmdHis&quot;</span>) . <span class="string">&quot;.&quot;</span> . <span class="variable">$ext</span>;</span><br></pre></td></tr></table></figure>
+
+<p>​    可以看出是一个通过随机数和时间来达到随机文件名的语句</p>
+<p>​    … 没啥思路</p>
+<p>​    查一下题目中的提示 </p>
+<p><em><strong>00截断上传</strong></em> </p>
+<ol>
+<li><p><em><strong>原理</strong></em>:</p>
+<p><strong>0x00</strong> 是字符串的结束标识, 可以手动添加来截断后面的内容, 而其后面的内容又能帮助绕过检测</p>
+</li>
+<li><p><em><strong>使用条件</strong></em> :</p>
+<p>PHP 版本 &lt; 5.3.29  GPC 关闭</p>
+</li>
+<li><p><em><strong>利用方法</strong></em> :</p>
+<p>上传文件后用 <em>burp</em> 抓包, 在文件名需要截断处加 <em>%00</em> 进行截断</p>
+</li>
+<li><p><em><strong>urldecode</strong></em> :</p>
+<p>进行 <em>urldecode</em> 的原因: 上传路径保存在表单中, 而表单里有一个 <em>enctype</em> 属性, 且 <em>enctype=”multipart/form-data”</em> 使得表单中的数据不被编码,就需要自行提前编码将 <em>%00</em> 转化为结束符; 而若是保存在 <em>url</em> 或者 <em>cookie</em> 中, 在上传时会进行 <em>urldecode</em> 操作,不用自行添加</p>
+</li>
+</ol>
+<p>上传 <em>attack.php.txt</em> , 提示文件类型不匹配</p>
+<p>上传 <em>attack.php.jpg</em> , 发现能成功上传</p>
+<p>上传 <em>.jpg</em> 并抓包, 获得如下界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211111140634463.png" alt="image-20211111140634463"></p>
+<p>(在这个地方传了几次都找不到文件, 后来才发现是第一行的 <em>upload/</em> 后面没有传递文件名, 加进去就行)</p>
+<p>修改成这样</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211111142139561.png" alt="image-20211111142139561"></p>
+<p>传完之后打开 <em>/upload/attack.php</em> , 发现显示 <em>phpinfo</em> 页面, 上传成功, 蚁剑带走</p>
+<hr>
+<h3 id="双写后缀"><a href="#双写后缀" class="headerlink" title="双写后缀"></a>双写后缀</h3><p>(没提示, 那可以开了)</p>
+<p>源码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;CTFHub 文件上传——双写绕过&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h1&gt;CTFHub 文件上传——双写绕过&lt;/h1&gt;</span><br><span class="line">    &lt;form action=&quot;&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">        &lt;label for=&quot;file&quot;&gt;Filename:&lt;/label&gt;</span><br><span class="line">        &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;file&quot; /&gt;</span><br><span class="line">        &lt;br /&gt;</span><br><span class="line">        &lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Submit&quot; /&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">    &lt;p&gt;&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--</span><br><span class="line">$name = basename($_FILES[&#x27;file&#x27;][&#x27;name&#x27;]);</span><br><span class="line">$blacklist = array(&quot;php&quot;, &quot;php5&quot;, &quot;php4&quot;, &quot;php3&quot;, &quot;phtml&quot;, &quot;pht&quot;, &quot;jsp&quot;, &quot;jspa&quot;, &quot;jspx&quot;, &quot;jsw&quot;, &quot;jsv&quot;, &quot;jspf&quot;, &quot;jtml&quot;, &quot;asp&quot;, &quot;aspx&quot;, &quot;asa&quot;, &quot;asax&quot;, &quot;ascx&quot;, &quot;ashx&quot;, &quot;asmx&quot;, &quot;cer&quot;, &quot;swf&quot;, &quot;htaccess&quot;, &quot;ini&quot;);</span><br><span class="line">$name = str_ireplace($blacklist, &quot;&quot;, $name);</span><br><span class="line">--&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>​    函数介绍:</p>
+<p>​    <strong>str_ireplace()</strong> :</p>
+<p>​    用于替换字符且不区分大小写 (而函数 <em>str_replace()</em> 则是区分大小写的), 用法如下:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str_ireplace(find, replace, <span class="keyword">string</span>, count)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>find : 必需, 规定需要查找的值</p>
+</li>
+<li><p>replace : 必需, 规定被替换成什么</p>
+</li>
+<li><p>string : 必需, 规定被搜索的字符串</p>
+</li>
+<li><p>count : 可选, 设定一个变量统计替换的次数</p>
+<p>实例:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$arr</span> = <span class="keyword">array</span>(<span class="string">&quot;pre&quot;</span>,<span class="string">&quot;make&quot;</span>);</span><br><span class="line">print_r(str_ireplace(<span class="string">&quot;pre&quot;</span>, <span class="string">&quot;re&quot;</span>, <span class="variable">$arr</span>,<span class="variable">$i</span>));</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;替换次数: <span class="subst">$i</span>&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Array</span> ( [<span class="number">0</span>] =&gt; re [<span class="number">1</span>] =&gt; make ) 替换次数: <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>回到题目, 可以看到是被黑名单过滤了, 而 <em>str_ireplace</em> 只会进行一次处理, 即替换完一次之后不会再检查字符串中还有没有能替换的字符, 将后缀名改为 <em>.phphpp</em> 然后上传, 即可看到</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211111153300394.png" alt="image-20211111153300394"></p>
+<p>然后蚁剑,收工.</p>
+</li>
+</ul>
+<hr>
+<p>至此, 所有有环境的文件上传题目就都做完了, 还差 </p>
+<ul>
+<li><em>后缀大小写绕过</em></li>
+<li><em>点绕过</em> </li>
+<li><em>空格绕过</em></li>
+<li><em>突破 getimagesize()</em></li>
+<li><em>突破 exif_imagetype()</em></li>
+<li><em>三次渲染</em></li>
+</ul>
+<p>这几道题由于 <em>ctfhub</em> 上没有环境就没做成, 改天找个时间做做</p>
 
       
     </div>
@@ -965,7 +1328,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -976,7 +1339,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
