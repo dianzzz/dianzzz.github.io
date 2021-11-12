@@ -33,10 +33,10 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211025140404795.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211025142054801.png">
 <meta property="article:published_time" content="2021-10-24T16:11:22.000Z">
-<meta property="article:modified_time" content="2021-11-11T07:50:15.449Z">
+<meta property="article:modified_time" content="2021-11-12T04:36:01.850Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="WP">
 <meta property="article:tag" content="CTF">
+<meta property="article:tag" content="WP">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211024194907935.png">
 
@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-11 15:50:15" itemprop="dateModified" datetime="2021-11-11T15:50:15+08:00">2021-11-11</time>
+                <time title="修改时间：2021-11-12 12:36:01" itemprop="dateModified" datetime="2021-11-12T12:36:01+08:00">2021-11-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -264,14 +264,14 @@
 <p>​    成功绕过 </p>
 <h3 id="第二部分-preg-match-‘-‘-GET-‘xxx’-绕过"><a href="#第二部分-preg-match-‘-‘-GET-‘xxx’-绕过" class="headerlink" title="第二部分 ( preg_match(‘/^$/‘, $_GET[‘xxx’]) 绕过 )"></a>第二部分 ( <em>preg_match(‘/^$/‘, $_GET[‘xxx’])</em> 绕过 )</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!preg_match(<span class="string">&#x27;/http/i&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">if</span> (preg_match(<span class="string">&#x27;/^i_am_bloodhound$/&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>]) &amp;&amp; <span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>] !== <span class="string">&#x27;i_am_bloodhound&#x27;</span>) &#123;</span><br><span class="line">        <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&quot;file&quot;</span>];</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;我是布洛特亨德尔!&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;?&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>​    对于 **preg_match(‘/^$/‘, $_GET[‘xxx’])**，只会去比较第一行，在末尾加上换行符 <em><strong>%0a</strong></em> 即可绕过</p>
+<p>​    对于 <strong>preg_match(‘/^$/‘, $_GET[‘xxx’])</strong> ，只会去比较第一行，在末尾加上换行符 <em><strong>%0a</strong></em> 即可绕过</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload: name=i_am_bloodhound%0a</span><br></pre></td></tr></table></figure>
 
 
 
 <h3 id="第三部分-md5-强碰撞-string"><a href="#第三部分-md5-强碰撞-string" class="headerlink" title="第三部分 ( md5 强碰撞 (string) )"></a>第三部分 ( <em>md5</em> 强碰撞 (string) )</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ((<span class="keyword">string</span>)<span class="variable">$_GET</span>[<span class="string">&#x27;s1&#x27;</span>] !== (<span class="keyword">string</span>)<span class="variable">$_GET</span>[<span class="string">&#x27;s2&#x27;</span>] &amp;&amp; md5(<span class="variable">$_GET</span>[<span class="string">&#x27;s1&#x27;</span>]) === md5(<span class="variable">$_GET</span>[<span class="string">&#x27;s2&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;众神之父赐予我视野&lt;br&gt;&quot;</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;众神之父赐予我重伤倒地&lt;br&gt;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>​    <strong>md5强碰撞</strong>，***===*** 进行了严格的过滤，且 <em><strong>string</strong></em> 限制了只能传入字符串，则必须使用两个不同但md5加密后完全相同的字符串来绕过，于是搜到了这篇文章<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2232">如何用不同的数值构建一样的MD5</a> ，构造出一对符合要求的字符串后将其进行url编码。</p>
+<p>​    <strong>md5强碰撞</strong>，**===** 进行了严格的过滤，且 <em><strong>string</strong></em> 限制了只能传入字符串，则必须使用两个不同但md5加密后完全相同的字符串来绕过，于是搜到了这篇文章<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2232">如何用不同的数值构建一样的MD5</a> ，构造出一对符合要求的字符串后将其进行url编码。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload: s1=%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%00%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%55%5d%83%60%fb%5f%07%fe%a2&amp;s2=%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%02%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%d5%5d%83%60%fb%5f%07%fe%a2</span><br></pre></td></tr></table></figure>
 
 <p>​    由于含有不可见字符，其md5加密相同，但url编码后不同，满足需求，过</p>
@@ -286,7 +286,7 @@
 
 <p>​    说实话这个地方我当时抄都没抄懂，于是在这儿稍微详细的记录一下。</p>
 <blockquote>
-<p>*file_get_contents()*用于把整个文件读入一个字符串中</p>
+<p><em>file_get_contents()</em> 用于把整个文件读入一个字符串中</p>
 <p>语法为: <strong>file_get_contents(path,include_path,context,start,max_length)</strong></p>
 <table>
 <thead>
@@ -297,7 +297,7 @@
 </thead>
 <tbody><tr>
 <td align="center">path</td>
-<td align="center">必需。规定所读取的文件(如”text.txt“)</td>
+<td align="center">必需。规定所读取的文件(如”text.txt”)</td>
 </tr>
 <tr>
 <td align="center">include_path</td>
@@ -326,9 +326,10 @@
 <blockquote>
 <p><strong>php://input</strong> 将post传来的数据全部当作文件内容，可以读取未处理过的POST数据</p>
 <p><strong>data://</strong> 用GET方法进行传输 ，有以下几种用法</p>
-<pre><code>    1. *data://text/plain,\&lt;?php phpinfo()?&gt;*
-    2. *data://text/plain;base64,(base64加密后的信息)*
-</code></pre>
+<ul>
+<li>data://text/plain,&lt;?php phpinfo()?&gt;</li>
+<li>data://text/plain;base64,(base64加密后的信息)</li>
+</ul>
 </blockquote>
 <p>我采用的是data的第二种方法，payload如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[GET] file=data://text/plain;base64,cGhvbmlleF9raXQ=</span><br><span class="line">[POST] file=1        (绕过第四部分)</span><br></pre></td></tr></table></figure>
@@ -415,8 +416,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/WP/" rel="tag"># WP</a>
               <a href="/tags/CTF/" rel="tag"># CTF</a>
+              <a href="/tags/WP/" rel="tag"># WP</a>
           </div>
 
         
