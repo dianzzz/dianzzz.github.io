@@ -17,6 +17,88 @@
       </tags>
   </entry>
   <entry>
+    <title>Git泄露</title>
+    <url>/2021/11/14/Git%E6%B3%84%E9%9C%B2/</url>
+    <content><![CDATA[<blockquote>
+<p>关于 <em>Git</em> 的一些题目</p>
+</blockquote>
+<!--more---->
+
+
+
+<hr>
+<h2 id="Log"><a href="#Log" class="headerlink" title="Log"></a>Log</h2><blockquote>
+<p>当前大量开发人员使用git进行版本控制，对站点自动部署。如果配置不当,可能会将.git文件夹直接部署到线上环境。这就引起了git泄露漏洞。请尝试使用BugScanTeam的GitHack完成本题     –From 题目</p>
+</blockquote>
+<p><em>GitHack</em> 使用方法: </p>
+<blockquote>
+<p>python2 GitHack.py <a href="http://www.example.com/.git/">http://www.example.com/.git/</a></p>
+</blockquote>
+<p>​    先用 <em>dirsearch</em> 扫一下，如图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211114142343028.png" alt="image-20211114142343028"></p>
+<p>​    发现了 <em>./git</em> ，于是用 <em>GitHack</em> 获取一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211125154720914.png" alt="image-20211125154720914"></p>
+<p>​    然后到对应的文件夹中运行 <em>Git</em> ，先看看历史版本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211114142710242.png" alt="image-20211114142710242"></p>
+<p>​    发现在这一版本中移除了 <em>flag</em>， 于是将其回退到上一版本，获取列表再打开那个 <em>txt</em> 文档，即可看到<em>flag</em></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211114143232011.png" alt="image-20211114143232011"></p>
+<p>ok了</p>
+<hr>
+<h2 id="Stash"><a href="#Stash" class="headerlink" title="Stash"></a>Stash</h2><blockquote>
+<p>一样的题面,就不贴了</p>
+</blockquote>
+<p>​    上手 <em>dirsearch</em> 扫一扫, 又来了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211114143713247.png" alt="image-20211114143713247"></p>
+<p>​    用 <em>githack</em> 扫一下， 效仿上一题的做法试试先， 发现输出这个</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211114145107409.png" alt="image-20211114145107409"></p>
+<p>​    <em>flag</em> 没在那个文本文档里面， 于是搜一下题目中的 **Stash ** 了解一下相关知识</p>
+<ul>
+<li><p><em><strong>git stash</strong></em></p>
+<p>用处: 保存当前工作进度, 会将暂存区和工作区的改动都进行保存 (可多次执行)</p>
+</li>
+<li><p><em><strong>git stash list</strong></em></p>
+<p>显示所保存的工作进度的列表</p>
+</li>
+<li><p><em><strong>git stash pop [index] [stash_id]</strong></em> (恢复后会删除被恢复的进度)</p>
+<ul>
+<li><strong>git stash pop</strong> 用于恢复最近保存的进度到工作区 (将工作区中和暂存区中保存的进度都恢复到现在的工作区中)</li>
+<li><strong>git stash pop –index</strong> 分别将最近保存的进度恢复到对应的区域中 (即工作区恢复至工作区, 暂存区恢复至暂存区)</li>
+<li><em><strong>git stash pop stash@{i}</strong></em> 恢复 <strong>git stash list</strong> 中的第 <em>i</em> 次的保存进度 (工作区+暂存区) 到工作区中</li>
+</ul>
+</li>
+<li><p><em><strong>git stash apply [index] [stash_id]</strong></em> (恢复后仍保留被恢复的进度,其他用法与语法与 <em>pop</em> 一样)</p>
+<ul>
+<li>(略)</li>
+</ul>
+</li>
+<li><p><em><strong>git stash drop [stash_id]</strong></em> </p>
+<ul>
+<li>删除一个保存的进度, 若不指定 <em>id</em> 则默认删除最新的保存进度</li>
+</ul>
+</li>
+<li><p><em><strong>git stash clear</strong></em> </p>
+<ul>
+<li>删除所有保存的进度</li>
+</ul>
+<p><del>(打完这个发现环境关了,典中典了属于是)</del>   .remake</p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211114153055272.png" alt="image-20211114153055272"></p>
+<p>​    相关知识了解完后就有手就能做了</p>
+<hr>
+<h2 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h2><p>​    <em>dirsearch</em> -&gt; <em>githack</em> , 然后…</p>
+<p>​    <em><strong>我不理解</strong></em></p>
+<p>​    一扫完就看到有一个文本文档在目录里面, 点开一看就是 <em>flag</em> , 我还以为是钓鱼弗拉格, 尝试提交之后居然还是真的, <em><strong>我不理解 !!!</strong></em></p>
+<p>​    这道题就没了……</p>
+<hr>
+<p>​    没了, 但是深刻感觉到 <em>git</em> 的知识还是太少了, 得整一整</p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>CtfHub</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JS学习笔记</title>
     <url>/2021/11/03/JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<blockquote>
@@ -176,122 +258,6 @@
       <tags>
         <tag>笔记</tag>
         <tag>PHP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git泄露</title>
-    <url>/2021/11/14/Git%E6%B3%84%E9%9C%B2/</url>
-    <content><![CDATA[<blockquote>
-<p>关于 <em>Git</em> 的一些题目</p>
-</blockquote>
-<!--more---->
-
-
-
-<hr>
-<h2 id="Log"><a href="#Log" class="headerlink" title="Log"></a>Log</h2><blockquote>
-<p>当前大量开发人员使用git进行版本控制，对站点自动部署。如果配置不当,可能会将.git文件夹直接部署到线上环境。这就引起了git泄露漏洞。请尝试使用BugScanTeam的GitHack完成本题     –From 题目</p>
-</blockquote>
-<p><em>GitHack</em> 使用方法: </p>
-<blockquote>
-<p>python2 GitHack.py <a href="http://www.example.com/.git/">http://www.example.com/.git/</a></p>
-</blockquote>
-<p>​    先用 <em>dirsearch</em> 扫一下，如图</p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211114142343028.png" alt="image-20211114142343028"></p>
-<p>​    发现了 <em>./git</em> ，于是用 <em>GitHack</em> 获取一下</p>
-<p><img src="C:/Users/dianzhang/AppData/Roaming/Typora/typora-user-images/image-20211114142545210.png" alt="image-20211114142545210"></p>
-<p>​    然后到对应的文件夹中运行 <em>Git</em> ，先看看历史版本</p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211114142710242.png" alt="image-20211114142710242"></p>
-<p>​    发现在这一版本中移除了 <em>flag</em>， 于是将其回退到上一版本，获取列表再打开那个 <em>txt</em> 文档，即可看到<em>flag</em></p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211114143232011.png" alt="image-20211114143232011"></p>
-<p>ok了</p>
-<hr>
-<h2 id="Stash"><a href="#Stash" class="headerlink" title="Stash"></a>Stash</h2><blockquote>
-<p>一样的题面,就不贴了</p>
-</blockquote>
-<p>​    上手 <em>dirsearch</em> 扫一扫, 又来了</p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211114143713247.png" alt="image-20211114143713247"></p>
-<p>​    用 <em>githack</em> 扫一下， 效仿上一题的做法试试先， 发现输出这个</p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211114145107409.png" alt="image-20211114145107409"></p>
-<p>​    <em>flag</em> 没在那个文本文档里面， 于是搜一下题目中的 **Stash ** 了解一下相关知识</p>
-<ul>
-<li><p><em><strong>git stash</strong></em></p>
-<p>用处: 保存当前工作进度, 会将暂存区和工作区的改动都进行保存 (可多次执行)</p>
-</li>
-<li><p><em><strong>git stash list</strong></em></p>
-<p>显示所保存的工作进度的列表</p>
-</li>
-<li><p><em><strong>git stash pop [index] [stash_id]</strong></em> (恢复后会删除被恢复的进度)</p>
-<ul>
-<li><strong>git stash pop</strong> 用于恢复最近保存的进度到工作区 (将工作区中和暂存区中保存的进度都恢复到现在的工作区中)</li>
-<li><strong>git stash pop –index</strong> 分别将最近保存的进度恢复到对应的区域中 (即工作区恢复至工作区, 暂存区恢复至暂存区)</li>
-<li><em><strong>git stash pop stash@{i}</strong></em> 恢复 <strong>git stash list</strong> 中的第 <em>i</em> 次的保存进度 (工作区+暂存区) 到工作区中</li>
-</ul>
-</li>
-<li><p><em><strong>git stash apply [index] [stash_id]</strong></em> (恢复后仍保留被恢复的进度,其他用法与语法与 <em>pop</em> 一样)</p>
-<ul>
-<li>(略)</li>
-</ul>
-</li>
-<li><p><em><strong>git stash drop [stash_id]</strong></em> </p>
-<ul>
-<li>删除一个保存的进度, 若不指定 <em>id</em> 则默认删除最新的保存进度</li>
-</ul>
-</li>
-<li><p><em><strong>git stash clear</strong></em> </p>
-<ul>
-<li>删除所有保存的进度</li>
-</ul>
-<p><del>(打完这个发现环境关了,典中典了属于是)</del>   .remake</p>
-</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211114153055272.png" alt="image-20211114153055272"></p>
-<p>​    相关知识了解完后就有手就能做了</p>
-<hr>
-<h2 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h2><p>​    <em>dirsearch</em> -&gt; <em>githack</em> , 然后…</p>
-<p>​    <em><strong>我不理解</strong></em></p>
-<p>​    一扫完就看到有一个文本文档在目录里面, 点开一看就是 <em>flag</em> , 我还以为是钓鱼弗拉格, 尝试提交之后居然还是真的, <em><strong>我不理解 !!!</strong></em></p>
-<p>​    这道题就没了……</p>
-<hr>
-<p>​    没了, 但是深刻感觉到 <em>git</em> 的知识还是太少了, 得整一整</p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>CtfHub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PY入门笔记</title>
-    <url>/2021/10/30/PY%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<blockquote>
-<p>确实PY还挺好入门的 (确信</p>
-</blockquote>
-<span id="more"></span>
-
-
-
-<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="pass-语句"><a href="#pass-语句" class="headerlink" title="pass 语句"></a>pass 语句</h3><p>​    没有任何实际含义, 仅作为占位语句. 在<strong>python 2.x</strong> 版本中函数内完全没有内容是不被允许的, 想要实现空函数必须使用pass 语句, 如下</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">function</span> ():</span></span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-
-<p>​    而在<strong>python 3.x</strong> 版本中空函数内可以连pass都没有</p>
-<hr>
-<h3 id="del-语句"><a href="#del-语句" class="headerlink" title="del 语句"></a>del 语句</h3><p>​    可以通过del 删除一些<em>Number 对象的引用</em> , 相当于断开数据与变量之间的链接, 但断开不具有传递性, 如</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line">b = a</span><br><span class="line">c = b</span><br><span class="line"><span class="keyword">del</span> a</span><br><span class="line"><span class="keyword">del</span> b</span><br><span class="line"><span class="comment"># 或者可以用 del a, b</span></span><br><span class="line"><span class="built_in">print</span> (c)</span><br></pre></td></tr></table></figure>
-
-<p>​    运行结果为</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>​    即, del 只会断开当前变量与数据之间的链接, 并不会影响其他与该变量有关的变量</p>
-<hr>
-<h2 id="Python-中的一些与运算有关的函数"><a href="#Python-中的一些与运算有关的函数" class="headerlink" title="Python 中的一些与运算有关的函数"></a>Python 中的一些与运算有关的函数</h2><blockquote>
-<p>没啥好写的,记录一下以备不时之需</p>
-</blockquote>
-<p>​    <a href="https://www.runoob.com/python/python-numbers.html">python中的<em>数学函数</em> <em>随机数函数</em> <em>三角函数</em>以及<em>数学常量</em></a></p>
-<hr>
-]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -497,6 +463,40 @@
       <tags>
         <tag>CTF</tag>
         <tag>WP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PY入门笔记</title>
+    <url>/2021/10/30/PY%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<blockquote>
+<p>确实PY还挺好入门的 (确信</p>
+</blockquote>
+<span id="more"></span>
+
+
+
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="pass-语句"><a href="#pass-语句" class="headerlink" title="pass 语句"></a>pass 语句</h3><p>​    没有任何实际含义, 仅作为占位语句. 在<strong>python 2.x</strong> 版本中函数内完全没有内容是不被允许的, 想要实现空函数必须使用pass 语句, 如下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">function</span> ():</span></span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p>​    而在<strong>python 3.x</strong> 版本中空函数内可以连pass都没有</p>
+<hr>
+<h3 id="del-语句"><a href="#del-语句" class="headerlink" title="del 语句"></a>del 语句</h3><p>​    可以通过del 删除一些<em>Number 对象的引用</em> , 相当于断开数据与变量之间的链接, 但断开不具有传递性, 如</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line">b = a</span><br><span class="line">c = b</span><br><span class="line"><span class="keyword">del</span> a</span><br><span class="line"><span class="keyword">del</span> b</span><br><span class="line"><span class="comment"># 或者可以用 del a, b</span></span><br><span class="line"><span class="built_in">print</span> (c)</span><br></pre></td></tr></table></figure>
+
+<p>​    运行结果为</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>​    即, del 只会断开当前变量与数据之间的链接, 并不会影响其他与该变量有关的变量</p>
+<hr>
+<h2 id="Python-中的一些与运算有关的函数"><a href="#Python-中的一些与运算有关的函数" class="headerlink" title="Python 中的一些与运算有关的函数"></a>Python 中的一些与运算有关的函数</h2><blockquote>
+<p>没啥好写的,记录一下以备不时之需</p>
+</blockquote>
+<p>​    <a href="https://www.runoob.com/python/python-numbers.html">python中的<em>数学函数</em> <em>随机数函数</em> <em>三角函数</em>以及<em>数学常量</em></a></p>
+<hr>
+]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
