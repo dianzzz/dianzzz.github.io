@@ -500,6 +500,159 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/10/09/hello-world/</url>
+    <content><![CDATA[<p>就一篇Hello World你还要看啊 :sweat_smile:</p>
+<p><em><strong>没 🌶</strong></em></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>反序列化学习</title>
+    <url>/2021/11/04/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<blockquote>
+<p>先学习一下 <em>php</em> 中的反序列化, 以后再学学其他语言里面的</p>
+</blockquote>
+<span id="more"></span>
+
+<h1 id="什么是序列化与反序列化"><a href="#什么是序列化与反序列化" class="headerlink" title="什么是序列化与反序列化"></a>什么是序列化与反序列化</h1><h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">serialize()		<span class="comment">// 将对象转换成字符串</span></span><br><span class="line">unserialize()		<span class="comment">// 将字符串还原成一个对象</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>示例:</strong></p>
+<p><em>序列化</em></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">test</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="variable">$flag</span> = <span class="string">&quot;flag&#123;233&#125;&quot;</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="variable">$a</span> = <span class="string">&quot;aaa&quot;</span>;</span><br><span class="line">        <span class="built_in">static</span> <span class="variable">$b</span> = <span class="string">&quot;bbb&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$test</span> = <span class="keyword">new</span> test;</span><br><span class="line">    <span class="variable">$data</span> = serialize(<span class="variable">$test</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$data</span>;</span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    输出</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">O:<span class="number">4</span>:<span class="string">&quot;test&quot;</span>:<span class="number">2</span>:&#123;s:<span class="number">10</span>:<span class="string">&quot;testflag&quot;</span>;s:<span class="number">9</span>:<span class="string">&quot;flag&#123;233&#125;&quot;</span>;s:<span class="number">1</span>:<span class="string">&quot;a&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;aaa&quot;</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    <em>O:4:”test”</em>  =  *Object (对象) * 4个字符: test</p>
+<p>​    <em>:2</em> = 对象属性个数为2</p>
+<p>​    <em>{}</em> = 属性的字符数 : 属性值</p>
+<p>​    <em>s</em>  = string  </p>
+<p>​    PS: *s:10: “testflag” * 字符数为10是因为其为 <strong>private</strong> 属性, 会在两侧加入空字节 (即 <em>%00</em> ), 所以在反序列化时 <strong>要补齐两个空字节</strong> </p>
+<p><em>反序列化</em></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">    <span class="variable">$str</span> = <span class="string">&#x27;O%3A4%3A%22test%22%3A2%3A%7Bs%3A10%3A%22%00test%00flag%22%3Bs%3A9%3A%22flag%7B233%7D%22%3Bs%3A1%3A%22a%22%3Bs%3A3%3A%22aaa%22%3B%7D&#x27;</span>;</span><br><span class="line">    <span class="variable">$data</span> = urldecode(<span class="variable">$str</span>);</span><br><span class="line">    <span class="variable">$obj</span> = unserialize(<span class="variable">$data</span>);</span><br><span class="line"></span><br><span class="line">    var_dump(<span class="variable">$obj</span>);</span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    输出:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">object</span>(<span class="built_in">__PHP_Incomplete_Class</span>)<span class="comment">#1 (3) </span></span><br><span class="line">&#123;</span><br><span class="line">  [<span class="string">&quot;__PHP_Incomplete_Class_Name&quot;</span>]=&gt; <span class="keyword">string</span>(<span class="number">4</span>) <span class="string">&quot;test&quot;</span></span><br><span class="line">  [<span class="string">&quot;flag&quot;</span>:<span class="string">&quot;test&quot;</span>:<span class="keyword">private</span>]=&gt; <span class="keyword">string</span>(<span class="number">9</span>) <span class="string">&quot;flag&#123;233&#125;&quot;</span></span><br><span class="line">  [<span class="string">&quot;a&quot;</span>]=&gt; <span class="keyword">string</span>(<span class="number">3</span>) <span class="string">&quot;aaa&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    ( 貌似 <em>private</em> 类型才会被单独标注出来 )</p>
+<h2 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h2><p>​    在对反序列化进行利用时, 经常需要通过反序列化中的魔术方法, 检查方法中有无敏感操作来利用</p>
+<p><strong>常见方法:</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__construct()			<span class="comment">// 创建对象时触发</span></span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__destruct()			<span class="comment">// 对象被销毁时触发</span></span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__call()			<span class="comment">// 在对象上下文调用不可访问的方法时触发</span></span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__callStatic()			<span class="comment">// 在静态上下文中调用不可访问的方法时触发</span></span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__get()				<span class="comment">// 用于从不可访问的属性中读取数据</span></span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__set()				<span class="comment">// 用于将数据写入不可访问的属性</span></span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__isset()			<span class="comment">// 在不可访问的属性上调用 isset() 或 empty() 触发</span></span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__unset()			<span class="comment">//在不可访问的属性上使用 unset() 时触发</span></span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__invoke()			<span class="comment">// 当脚本尝试将对象调用为函数时触发</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>比较重要的方法:</strong></p>
+<ol>
+<li><strong>__sleep()</strong> </li>
+</ol>
+<blockquote>
+<p>​    <em>serialize()</em> 函数会检查类中是否存在一个魔术方法 <em>__sleep()</em>. 如果存在, 该方法会先被调用, 然后才执行序列化操作. </p>
+<p>​    此功能可以用于清理对象, 并返回一个包含对象中所有应被序列化的变量名称的数组. 如果该方法未返回任何内容, 则 <strong>null</strong> 被序列化, 并产生一个 <strong>E_NOTICE</strong> 级别的错误. </p>
+<p>​                                                                    — From PHP手册</p>
+</blockquote>
+<p>​    该函数在对象被序列化之前触发, 返回需要被序列化存储的成员属性, 可以避免序列化不必要的属性</p>
+<p>实例:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CTFer</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$C</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$T</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$F</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$C</span>=<span class="string">&quot;&quot;</span>,  <span class="variable">$T</span>=<span class="number">1</span>, <span class="variable">$F</span>=<span class="string">&#x27;Happy&#x27;</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;C = <span class="variable">$C</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;T  = <span class="variable">$T</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;F  = <span class="variable">$F</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> array</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__sleep</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;CTF也就图一乐,要真选点好的还得看__sleep()\n&quot;</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;C = base64_encode(<span class="keyword">$this</span>-&gt;C);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;CTF = <span class="string">&#x27;for 1 happy&#x27;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">array</span>(<span class="string">&#x27;C&#x27;</span>, <span class="string">&#x27;T&#x27;</span>,<span class="string">&#x27;CTF&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$CTFer</span> = <span class="keyword">new</span> CTFer(<span class="string">&#x27;D_Z&#x27;</span>);   <span class="comment">// &#x27;D_Z&#x27; 传给 $C</span></span><br><span class="line"><span class="keyword">echo</span> serialize(<span class="variable">$CTFer</span>),<span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>输出:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">CTF也就图一乐,要真选点好的还得看__sleep()</span><br><span class="line">O:<span class="number">5</span>:<span class="string">&quot;CTFer&quot;</span>:<span class="number">3</span>:&#123;s:<span class="number">1</span>:<span class="string">&quot;C&quot;</span>;s:<span class="number">4</span>:<span class="string">&quot;RF9a&quot;</span>;s:<span class="number">1</span>:<span class="string">&quot;T&quot;</span>;i:<span class="number">1</span>;s:<span class="number">3</span>:<span class="string">&quot;CTF&quot;</span>;s:<span class="number">11</span>:<span class="string">&quot;for 1 happy&quot;</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ol start="2">
+<li><strong>__wakeup()</strong></li>
+</ol>
+<blockquote>
+<p><em>unserialize()</em> 会检查是否存在一个 <em>__wakeup()</em> 方法. 如果存在, 则会先调用 <em>__wakeup</em> 方法, 预先准备对象需要的资源.</p>
+<p>​                                                                    — From PHP手册</p>
+</blockquote>
+<p>​    预先准备对象资源, 无返回值, 常用于反序列化操作中重新建立数据库连接或者执行其他初始化操作</p>
+<p>实例:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CTFer</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$C</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$T</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$F</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$C</span>=<span class="string">&quot;&quot;</span>,  <span class="variable">$T</span>=<span class="number">1</span>, <span class="variable">$F</span>=<span class="string">&#x27;Happy&#x27;</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;C = <span class="variable">$C</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;T  = <span class="variable">$T</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;F  = <span class="variable">$F</span>;</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;CTF也就图一乐,真要改东西还得看__wakeup()\n&quot;</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;C = <span class="string">&#x27;Dian_Zh&#x27;</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;CTF = <span class="string">&quot;For 1 Happy&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$CTFer</span> = <span class="keyword">new</span> CTFer(<span class="string">&#x27;D_Z&#x27;</span>);</span><br><span class="line"><span class="keyword">echo</span> serialize(<span class="variable">$CTFer</span>),<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> serialize(unserialize(serialize(<span class="variable">$CTFer</span>))),<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>输出:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">O:<span class="number">5</span>:<span class="string">&quot;CTFer&quot;</span>:<span class="number">3</span>:&#123;s:<span class="number">1</span>:<span class="string">&quot;C&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;D_Z&quot;</span>;s:<span class="number">1</span>:<span class="string">&quot;T&quot;</span>;i:<span class="number">1</span>;s:<span class="number">1</span>:<span class="string">&quot;F&quot;</span>;s:<span class="number">5</span>:<span class="string">&quot;Happy&quot;</span>;&#125;</span><br><span class="line">CTF也就图一乐,真要改东西还得看__wakeup()</span><br><span class="line">O:<span class="number">5</span>:<span class="string">&quot;CTFer&quot;</span>:<span class="number">4</span>:&#123;s:<span class="number">1</span>:<span class="string">&quot;C&quot;</span>;s:<span class="number">7</span>:<span class="string">&quot;Dian_Zh&quot;</span>;s:<span class="number">1</span>:<span class="string">&quot;T&quot;</span>;i:<span class="number">1</span>;s:<span class="number">1</span>:<span class="string">&quot;F&quot;</span>;s:<span class="number">5</span>:<span class="string">&quot;Happy&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;CTF&quot;</span>;s:<span class="number">11</span>:<span class="string">&quot;For 1 Happy&quot;</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="反序列化对象注入"><a href="#反序列化对象注入" class="headerlink" title="反序列化对象注入"></a>反序列化对象注入</h2><h3 id="绕过-wakeup-方法-CVE-2016-7124-漏洞"><a href="#绕过-wakeup-方法-CVE-2016-7124-漏洞" class="headerlink" title="绕过 __wakeup() 方法 (CVE-2016-7124 漏洞)"></a>绕过 <em>__wakeup()</em> 方法 (<em>CVE-2016-7124</em> 漏洞)</h3><p>PHP5 &lt; 5.6.25 或 PHP7 &lt; 7.0.10 适用 <del>(我就说我为啥搞半天都没在我的网站上绕过去)</del> </p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SoFun</span></span>&#123; </span><br><span class="line">  <span class="keyword">protected</span> <span class="variable">$file</span>=<span class="string">&#x27;index.php&#x27;</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="keyword">$this</span>-&gt;file)) &#123;</span><br><span class="line">      <span class="keyword">if</span>(strchr(<span class="keyword">$this</span>-&gt; file,<span class="string">&quot;\\&quot;</span>)===<span class="literal">false</span> &amp;&amp;  strchr(<span class="keyword">$this</span>-&gt;file, <span class="string">&#x27;/&#x27;</span>)===<span class="literal">false</span>)</span><br><span class="line">        show_source(dirname (<span class="keyword">__FILE__</span>).<span class="string">&#x27;/&#x27;</span>.<span class="keyword">$this</span> -&gt;file);</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;Wrong filename.&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">$this</span>-&gt; file=<span class="string">&#x27;index.php&#x27;</span>;</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    <span class="title">return</span> &#x27;&#x27; </span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;     </span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123; </span><br><span class="line">  show_source(<span class="string">&#x27;index.php&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123; </span><br><span class="line">  <span class="variable">$file</span>=base64_decode(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]); </span><br><span class="line">  <span class="keyword">echo</span> unserialize(<span class="variable">$file</span>); </span><br><span class="line">&#125;</span><br><span class="line"> <span class="meta">?&gt;</span> <span class="comment">#&lt;!--key in flag.php--&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>分析:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">show_source(dirname (<span class="keyword">__FILE__</span>).<span class="string">&#x27;/&#x27;</span>.<span class="keyword">$this</span> -&gt;file);</span><br></pre></td></tr></table></figure>
+
+<p>​    用于读取文件内容, 结合最后一句话可知需要访问 <em>flag.php</em> 页面, 即 <em>$this-&gt;file</em> 应为 <em>flag.php</em> </p>
+<p>​    但看到有魔术方法 <em>__wakeup()</em> 将 <em>$this-&gt;file</em> 改为 <em>index.php</em> ,则需要绕过. 绕过原理为: <strong>当序列化字符串中表示对象属性个数的值大于真实的属性个数时, 会跳过 __wakeup() 的执行</strong> </p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">payload: O:<span class="number">5</span>:<span class="string">&quot;SoFun&quot;</span>:<span class="number">2</span>:&#123;S:<span class="number">7</span>:<span class="string">&quot;\00*\00file&quot;</span>;s:<span class="number">8</span>:<span class="string">&quot;flag.php&quot;</span>;&#125;  <span class="comment">//还需要进行base64编码</span></span><br></pre></td></tr></table></figure>
+
+<p>应注意的是, 第一个 <em>S</em> 为大写, 才能将 <em>\00*\00</em> 识别为一个字符. (<a href="http://www.neatstudio.com/show-161-1.shtml">PHP序列化详解</a>) </p>
+<h2 id="session-反序列化漏洞"><a href="#session-反序列化漏洞" class="headerlink" title="session 反序列化漏洞"></a><em>session</em> 反序列化漏洞</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ol>
+<li><strong>什么是 <em>session</em> ?</strong>  (要写的有点多,就重新开一篇罢 <a href="">session详解</a> <!--还没写--> )</li>
+</ol>
+<blockquote>
+<p>​    <em>Session</em> ：在计算机中，尤其是在网络应用中，称为“会话控制”。</p>
+<p>​    <em>Session</em> 对象存储特定用户会话所需的属性及配置信息。这样，当用户在应用程序的 <em>Web</em> 页之间跳转时，存储在 <em>Session</em> 对象中的变量将不会丢失，而是在整个用户会话中一直存在下去。</p>
+<p>​    当用户请求来自应用程序的 <em>Web</em> 页时，如果该用户还没有会话，则 <em>Web</em> 服务器将自动创建一个 <em>Session</em> 对象。当会话过期或被放弃后，服务器将终止该会话。                                </p>
+<p>​                                                                      — From 百度百科</p>
+<p>​    (看个乐就行了, 真要看还得看那篇详解)    </p>
+</blockquote>
+<ol start="2">
+<li><p><strong>什么是 <em>session</em> 反序列化?</strong> </p>
+<p><em>PHP</em> 在 <em>session</em> 存储和读取时, 都会有一个序列化和反序列化的过程</p>
+<p>相关:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211124140532082.png" alt="image-20211124140532082"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211124140619117.png" alt="image-20211124140619117"></p>
+<blockquote>
+<ul>
+<li><em>session.auto_start</em> 用于指定会话模块是否在请求开始时自动启动一个会话</li>
+<li><em>session.save_handler</em> 用于设定用户自定义存储函数</li>
+<li><em>session.save_path</em> 用于设置 <em>session</em> 的存储路径</li>
+<li><em>session.serialize_handler</em> 用于定义用来序列化和反序列化的处理器的名字. 默认为 <em>php</em> , 此外还有 <em>php_serialize</em> / <em>php_binary</em> / <em>wddx</em> </li>
+</ul>
+</blockquote>
+<p>存储机制：</p>
+<p>​    <em>php</em> 中以 <strong>文件</strong> 的方式来存储 <em>session</em> 内容, 具体如何存储由 <em>session.save_handler</em> 来决定. 文件名由 <em>sess_sessionid</em> 命名, 文件内容为 <em>session</em> 序列化后的值.</p>
+<p>测试一下:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">ini_set(<span class="string">&#x27;session.serialize_handler&#x27;</span>,<span class="string">&#x27;php_serialize&#x27;</span>);</span><br><span class="line">session_start();</span><br><span class="line"></span><br><span class="line"><span class="variable">$_SESSION</span>[<span class="string">&#x27;name&#x27;</span>] = <span class="string">&#x27;dianzh&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>​    运行之后会在 <em>session.save_path</em> 中设置的路径中生成一个 <em>session</em> 文件,如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211124161542035.png" alt="image-20211124161542035"></p>
+<p>​    将 <em>php_serialize</em> 换成 <em>php</em> 后, 文件如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211124161721445.png" alt="image-20211124161721445"></p>
+<p>​    换成 <em>php_binary</em> 后, 如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211124161853373.png" alt="image-20211124161853373"></p>
+<p>​    <em>wddx</em></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211124162001935.png" alt="image-20211124162001935"></p>
+<p>​    处理器的存储格式差异, 会造成在 <em>session</em> 序列化和反序列化处理器设置不当时产生安全隐患</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>反序列化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ctfhub技能树 之 文件上传</title>
     <url>/2021/11/02/ctfhub%E6%8A%80%E8%83%BD%E6%A0%91/</url>
     <content><![CDATA[<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><blockquote>
@@ -737,159 +890,6 @@
       <tags>
         <tag>CTF</tag>
         <tag>CtfHub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/10/09/hello-world/</url>
-    <content><![CDATA[<p>就一篇Hello World你还要看啊 :sweat_smile:</p>
-<p><em><strong>没 🌶</strong></em></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>反序列化学习</title>
-    <url>/2021/11/04/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<blockquote>
-<p>先学习一下 <em>php</em> 中的反序列化, 以后再学学其他语言里面的</p>
-</blockquote>
-<span id="more"></span>
-
-<h1 id="什么是序列化与反序列化"><a href="#什么是序列化与反序列化" class="headerlink" title="什么是序列化与反序列化"></a>什么是序列化与反序列化</h1><h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">serialize()		<span class="comment">// 将对象转换成字符串</span></span><br><span class="line">unserialize()		<span class="comment">// 将字符串还原成一个对象</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>示例:</strong></p>
-<p><em>序列化</em></p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">test</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="variable">$flag</span> = <span class="string">&quot;flag&#123;233&#125;&quot;</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="variable">$a</span> = <span class="string">&quot;aaa&quot;</span>;</span><br><span class="line">        <span class="built_in">static</span> <span class="variable">$b</span> = <span class="string">&quot;bbb&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$test</span> = <span class="keyword">new</span> test;</span><br><span class="line">    <span class="variable">$data</span> = serialize(<span class="variable">$test</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$data</span>;</span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>​    输出</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">O:<span class="number">4</span>:<span class="string">&quot;test&quot;</span>:<span class="number">2</span>:&#123;s:<span class="number">10</span>:<span class="string">&quot;testflag&quot;</span>;s:<span class="number">9</span>:<span class="string">&quot;flag&#123;233&#125;&quot;</span>;s:<span class="number">1</span>:<span class="string">&quot;a&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;aaa&quot;</span>;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    <em>O:4:”test”</em>  =  *Object (对象) * 4个字符: test</p>
-<p>​    <em>:2</em> = 对象属性个数为2</p>
-<p>​    <em>{}</em> = 属性的字符数 : 属性值</p>
-<p>​    <em>s</em>  = string  </p>
-<p>​    PS: *s:10: “testflag” * 字符数为10是因为其为 <strong>private</strong> 属性, 会在两侧加入空字节 (即 <em>%00</em> ), 所以在反序列化时 <strong>要补齐两个空字节</strong> </p>
-<p><em>反序列化</em></p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">    <span class="variable">$str</span> = <span class="string">&#x27;O%3A4%3A%22test%22%3A2%3A%7Bs%3A10%3A%22%00test%00flag%22%3Bs%3A9%3A%22flag%7B233%7D%22%3Bs%3A1%3A%22a%22%3Bs%3A3%3A%22aaa%22%3B%7D&#x27;</span>;</span><br><span class="line">    <span class="variable">$data</span> = urldecode(<span class="variable">$str</span>);</span><br><span class="line">    <span class="variable">$obj</span> = unserialize(<span class="variable">$data</span>);</span><br><span class="line"></span><br><span class="line">    var_dump(<span class="variable">$obj</span>);</span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>​    输出:</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">object</span>(<span class="built_in">__PHP_Incomplete_Class</span>)<span class="comment">#1 (3) </span></span><br><span class="line">&#123;</span><br><span class="line">  [<span class="string">&quot;__PHP_Incomplete_Class_Name&quot;</span>]=&gt; <span class="keyword">string</span>(<span class="number">4</span>) <span class="string">&quot;test&quot;</span></span><br><span class="line">  [<span class="string">&quot;flag&quot;</span>:<span class="string">&quot;test&quot;</span>:<span class="keyword">private</span>]=&gt; <span class="keyword">string</span>(<span class="number">9</span>) <span class="string">&quot;flag&#123;233&#125;&quot;</span></span><br><span class="line">  [<span class="string">&quot;a&quot;</span>]=&gt; <span class="keyword">string</span>(<span class="number">3</span>) <span class="string">&quot;aaa&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    ( 貌似 <em>private</em> 类型才会被单独标注出来 )</p>
-<h2 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h2><p>​    在对反序列化进行利用时, 经常需要通过反序列化中的魔术方法, 检查方法中有无敏感操作来利用</p>
-<p><strong>常见方法:</strong></p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__construct()			<span class="comment">// 创建对象时触发</span></span><br></pre></td></tr></table></figure>
-
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__destruct()			<span class="comment">// 对象被销毁时触发</span></span><br></pre></td></tr></table></figure>
-
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__call()			<span class="comment">// 在对象上下文调用不可访问的方法时触发</span></span><br></pre></td></tr></table></figure>
-
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__callStatic()			<span class="comment">// 在静态上下文中调用不可访问的方法时触发</span></span><br></pre></td></tr></table></figure>
-
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__get()				<span class="comment">// 用于从不可访问的属性中读取数据</span></span><br></pre></td></tr></table></figure>
-
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__set()				<span class="comment">// 用于将数据写入不可访问的属性</span></span><br></pre></td></tr></table></figure>
-
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__isset()			<span class="comment">// 在不可访问的属性上调用 isset() 或 empty() 触发</span></span><br></pre></td></tr></table></figure>
-
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__unset()			<span class="comment">//在不可访问的属性上使用 unset() 时触发</span></span><br></pre></td></tr></table></figure>
-
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">__invoke()			<span class="comment">// 当脚本尝试将对象调用为函数时触发</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>比较重要的方法:</strong></p>
-<ol>
-<li><strong>__sleep()</strong> </li>
-</ol>
-<blockquote>
-<p>​    <em>serialize()</em> 函数会检查类中是否存在一个魔术方法 <em>__sleep()</em>. 如果存在, 该方法会先被调用, 然后才执行序列化操作. </p>
-<p>​    此功能可以用于清理对象, 并返回一个包含对象中所有应被序列化的变量名称的数组. 如果该方法未返回任何内容, 则 <strong>null</strong> 被序列化, 并产生一个 <strong>E_NOTICE</strong> 级别的错误. </p>
-<p>​                                                                    — From PHP手册</p>
-</blockquote>
-<p>​    该函数在对象被序列化之前触发, 返回需要被序列化存储的成员属性, 可以避免序列化不必要的属性</p>
-<p>实例:</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CTFer</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$C</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$T</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$F</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$C</span>=<span class="string">&quot;&quot;</span>,  <span class="variable">$T</span>=<span class="number">1</span>, <span class="variable">$F</span>=<span class="string">&#x27;Happy&#x27;</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;C = <span class="variable">$C</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;T  = <span class="variable">$T</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;F  = <span class="variable">$F</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> array</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__sleep</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;CTF也就图一乐,要真选点好的还得看__sleep()\n&quot;</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;C = base64_encode(<span class="keyword">$this</span>-&gt;C);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;CTF = <span class="string">&#x27;for 1 happy&#x27;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">array</span>(<span class="string">&#x27;C&#x27;</span>, <span class="string">&#x27;T&#x27;</span>,<span class="string">&#x27;CTF&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$CTFer</span> = <span class="keyword">new</span> CTFer(<span class="string">&#x27;D_Z&#x27;</span>);   <span class="comment">// &#x27;D_Z&#x27; 传给 $C</span></span><br><span class="line"><span class="keyword">echo</span> serialize(<span class="variable">$CTFer</span>),<span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>输出:</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">CTF也就图一乐,要真选点好的还得看__sleep()</span><br><span class="line">O:<span class="number">5</span>:<span class="string">&quot;CTFer&quot;</span>:<span class="number">3</span>:&#123;s:<span class="number">1</span>:<span class="string">&quot;C&quot;</span>;s:<span class="number">4</span>:<span class="string">&quot;RF9a&quot;</span>;s:<span class="number">1</span>:<span class="string">&quot;T&quot;</span>;i:<span class="number">1</span>;s:<span class="number">3</span>:<span class="string">&quot;CTF&quot;</span>;s:<span class="number">11</span>:<span class="string">&quot;for 1 happy&quot;</span>;&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<ol start="2">
-<li><strong>__wakeup()</strong></li>
-</ol>
-<blockquote>
-<p><em>unserialize()</em> 会检查是否存在一个 <em>__wakeup()</em> 方法. 如果存在, 则会先调用 <em>__wakeup</em> 方法, 预先准备对象需要的资源.</p>
-<p>​                                                                    — From PHP手册</p>
-</blockquote>
-<p>​    预先准备对象资源, 无返回值, 常用于反序列化操作中重新建立数据库连接或者执行其他初始化操作</p>
-<p>实例:</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CTFer</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$C</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$T</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$F</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$C</span>=<span class="string">&quot;&quot;</span>,  <span class="variable">$T</span>=<span class="number">1</span>, <span class="variable">$F</span>=<span class="string">&#x27;Happy&#x27;</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;C = <span class="variable">$C</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;T  = <span class="variable">$T</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;F  = <span class="variable">$F</span>;</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;CTF也就图一乐,真要改东西还得看__wakeup()\n&quot;</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;C = <span class="string">&#x27;Dian_Zh&#x27;</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;CTF = <span class="string">&quot;For 1 Happy&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$CTFer</span> = <span class="keyword">new</span> CTFer(<span class="string">&#x27;D_Z&#x27;</span>);</span><br><span class="line"><span class="keyword">echo</span> serialize(<span class="variable">$CTFer</span>),<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> serialize(unserialize(serialize(<span class="variable">$CTFer</span>))),<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>输出:</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">O:<span class="number">5</span>:<span class="string">&quot;CTFer&quot;</span>:<span class="number">3</span>:&#123;s:<span class="number">1</span>:<span class="string">&quot;C&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;D_Z&quot;</span>;s:<span class="number">1</span>:<span class="string">&quot;T&quot;</span>;i:<span class="number">1</span>;s:<span class="number">1</span>:<span class="string">&quot;F&quot;</span>;s:<span class="number">5</span>:<span class="string">&quot;Happy&quot;</span>;&#125;</span><br><span class="line">CTF也就图一乐,真要改东西还得看__wakeup()</span><br><span class="line">O:<span class="number">5</span>:<span class="string">&quot;CTFer&quot;</span>:<span class="number">4</span>:&#123;s:<span class="number">1</span>:<span class="string">&quot;C&quot;</span>;s:<span class="number">7</span>:<span class="string">&quot;Dian_Zh&quot;</span>;s:<span class="number">1</span>:<span class="string">&quot;T&quot;</span>;i:<span class="number">1</span>;s:<span class="number">1</span>:<span class="string">&quot;F&quot;</span>;s:<span class="number">5</span>:<span class="string">&quot;Happy&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;CTF&quot;</span>;s:<span class="number">11</span>:<span class="string">&quot;For 1 Happy&quot;</span>;&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="反序列化对象注入"><a href="#反序列化对象注入" class="headerlink" title="反序列化对象注入"></a>反序列化对象注入</h2><h3 id="绕过-wakeup-方法-CVE-2016-7124-漏洞"><a href="#绕过-wakeup-方法-CVE-2016-7124-漏洞" class="headerlink" title="绕过 __wakeup() 方法 (CVE-2016-7124 漏洞)"></a>绕过 <em>__wakeup()</em> 方法 (<em>CVE-2016-7124</em> 漏洞)</h3><p>PHP5 &lt; 5.6.25 或 PHP7 &lt; 7.0.10 适用 <del>(我就说我为啥搞半天都没在我的网站上绕过去)</del> </p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SoFun</span></span>&#123; </span><br><span class="line">  <span class="keyword">protected</span> <span class="variable">$file</span>=<span class="string">&#x27;index.php&#x27;</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="keyword">$this</span>-&gt;file)) &#123;</span><br><span class="line">      <span class="keyword">if</span>(strchr(<span class="keyword">$this</span>-&gt; file,<span class="string">&quot;\\&quot;</span>)===<span class="literal">false</span> &amp;&amp;  strchr(<span class="keyword">$this</span>-&gt;file, <span class="string">&#x27;/&#x27;</span>)===<span class="literal">false</span>)</span><br><span class="line">        show_source(dirname (<span class="keyword">__FILE__</span>).<span class="string">&#x27;/&#x27;</span>.<span class="keyword">$this</span> -&gt;file);</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;Wrong filename.&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">$this</span>-&gt; file=<span class="string">&#x27;index.php&#x27;</span>;</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    <span class="title">return</span> &#x27;&#x27; </span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;     </span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123; </span><br><span class="line">  show_source(<span class="string">&#x27;index.php&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123; </span><br><span class="line">  <span class="variable">$file</span>=base64_decode(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]); </span><br><span class="line">  <span class="keyword">echo</span> unserialize(<span class="variable">$file</span>); </span><br><span class="line">&#125;</span><br><span class="line"> <span class="meta">?&gt;</span> <span class="comment">#&lt;!--key in flag.php--&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>分析:</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">show_source(dirname (<span class="keyword">__FILE__</span>).<span class="string">&#x27;/&#x27;</span>.<span class="keyword">$this</span> -&gt;file);</span><br></pre></td></tr></table></figure>
-
-<p>​    用于读取文件内容, 结合最后一句话可知需要访问 <em>flag.php</em> 页面, 即 <em>$this-&gt;file</em> 应为 <em>flag.php</em> </p>
-<p>​    但看到有魔术方法 <em>__wakeup()</em> 将 <em>$this-&gt;file</em> 改为 <em>index.php</em> ,则需要绕过. 绕过原理为: <strong>当序列化字符串中表示对象属性个数的值大于真实的属性个数时, 会跳过 __wakeup() 的执行</strong> </p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">payload: O:<span class="number">5</span>:<span class="string">&quot;SoFun&quot;</span>:<span class="number">2</span>:&#123;S:<span class="number">7</span>:<span class="string">&quot;\00*\00file&quot;</span>;s:<span class="number">8</span>:<span class="string">&quot;flag.php&quot;</span>;&#125;  <span class="comment">//还需要进行base64编码</span></span><br></pre></td></tr></table></figure>
-
-<p>应注意的是, 第一个 <em>S</em> 为大写, 才能将 <em>\00*\00</em> 识别为一个字符. (<a href="http://www.neatstudio.com/show-161-1.shtml">PHP序列化详解</a>) </p>
-<h2 id="session-反序列化漏洞"><a href="#session-反序列化漏洞" class="headerlink" title="session 反序列化漏洞"></a><em>session</em> 反序列化漏洞</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ol>
-<li><strong>什么是 <em>session</em> ?</strong>  (要写的有点多,就重新开一篇罢 <a href="">session详解</a> <!--还没写--> )</li>
-</ol>
-<blockquote>
-<p>​    <em>Session</em> ：在计算机中，尤其是在网络应用中，称为“会话控制”。</p>
-<p>​    <em>Session</em> 对象存储特定用户会话所需的属性及配置信息。这样，当用户在应用程序的 <em>Web</em> 页之间跳转时，存储在 <em>Session</em> 对象中的变量将不会丢失，而是在整个用户会话中一直存在下去。</p>
-<p>​    当用户请求来自应用程序的 <em>Web</em> 页时，如果该用户还没有会话，则 <em>Web</em> 服务器将自动创建一个 <em>Session</em> 对象。当会话过期或被放弃后，服务器将终止该会话。                                </p>
-<p>​                                                                      — From 百度百科</p>
-<p>​    (看个乐就行了, 真要看还得看那篇详解)    </p>
-</blockquote>
-<ol start="2">
-<li><p><strong>什么是 <em>session</em> 反序列化?</strong> </p>
-<p><em>PHP</em> 在 <em>session</em> 存储和读取时, 都会有一个序列化和反序列化的过程</p>
-<p>相关:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211124140532082.png" alt="image-20211124140532082"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211124140619117.png" alt="image-20211124140619117"></p>
-<blockquote>
-<ul>
-<li><em>session.auto_start</em> 用于指定会话模块是否在请求开始时自动启动一个会话</li>
-<li><em>session.save_handler</em> 用于设定用户自定义存储函数</li>
-<li><em>session.save_path</em> 用于设置 <em>session</em> 的存储路径</li>
-<li><em>session.serialize_handler</em> 用于定义用来序列化和反序列化的处理器的名字. 默认为 <em>php</em> , 此外还有 <em>php_serialize</em> / <em>php_binary</em> / <em>wddx</em> </li>
-</ul>
-</blockquote>
-<p>存储机制：</p>
-<p>​    <em>php</em> 中以 <strong>文件</strong> 的方式来存储 <em>session</em> 内容, 具体如何存储由 <em>session.save_handler</em> 来决定. 文件名由 <em>sess_sessionid</em> 命名, 文件内容为 <em>session</em> 序列化后的值.</p>
-<p>测试一下:</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">ini_set(<span class="string">&#x27;session.serialize_handler&#x27;</span>,<span class="string">&#x27;php_serialize&#x27;</span>);</span><br><span class="line">session_start();</span><br><span class="line"></span><br><span class="line"><span class="variable">$_SESSION</span>[<span class="string">&#x27;name&#x27;</span>] = <span class="string">&#x27;dianzh&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>​    运行之后会在 <em>session.save_path</em> 中设置的路径中生成一个 <em>session</em> 文件,如下</p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211124161542035.png" alt="image-20211124161542035"></p>
-<p>​    将 <em>php_serialize</em> 换成 <em>php</em> 后, 文件如下</p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211124161721445.png" alt="image-20211124161721445"></p>
-<p>​    换成 <em>php_binary</em> 后, 如下</p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211124161853373.png" alt="image-20211124161853373"></p>
-<p>​    <em>wddx</em></p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211124162001935.png" alt="image-20211124162001935"></p>
-<p>​    处理器的存储格式差异, 会造成在 <em>session</em> 序列化和反序列化处理器设置不当时产生安全隐患</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>反序列化</tag>
       </tags>
   </entry>
 </search>
