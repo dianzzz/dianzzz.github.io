@@ -165,6 +165,102 @@
       </tags>
   </entry>
   <entry>
+    <title>PHP学习笔记</title>
+    <url>/2021/11/05/PHP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h2 id="一些基础知识"><a href="#一些基础知识" class="headerlink" title="一些基础知识"></a>一些基础知识</h2><span id="more"></span>
+
+<ol>
+<li><h3 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h3><p><em>PHP</em> 变量由 <strong>$</strong> 符号开始, 后跟着变量名称, 且 <strong>不用事先声明</strong> , 如: </p>
+</li>
+</ol>
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$txt</span>=<span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line"><span class="variable">$x</span>=<span class="number">5</span>;</span><br><span class="line"><span class="variable">$y</span>=<span class="variable">$x</span>*<span class="number">2</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$txe</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$y</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><h3 id="Global-关键字"><a href="#Global-关键字" class="headerlink" title="Global 关键字"></a><strong>Global 关键字</strong></h3></li>
+</ol>
+<p>   <em>global</em> 关键字用于函数内访问全局变量, 如</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$x</span>=<span class="number">5</span>;</span><br><span class="line"><span class="variable">$y</span>=<span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myTest</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">global</span> <span class="variable">$x</span>,<span class="variable">$y</span>;</span><br><span class="line">	<span class="variable">$y</span>=<span class="variable">$x</span>+<span class="variable">$y</span>;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    或者可以这样写:</span></span><br><span class="line"><span class="comment">    $GLOBAL[&#x27;y&#x27;]=$GLOBAL[&#x27;x&#x27;]+$GLOBAL[&#x27;y&#x27;];</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">myTest();</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$y</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    输出为</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="number">15</span></span><br></pre></td></tr></table></figure>
+
+<p>​    <em>php</em> 将所有的全局变量存储在 名为 <em>GLOBAL</em> 的数组中, 则可以写成第二种写法</p>
+<ol start="3">
+<li><h3 id="static-关键字"><a href="#static-关键字" class="headerlink" title="static 关键字"></a><strong>static</strong> 关键字</h3><p>若希望局部变量不被删除, 则需要使用 <em>static</em> 关键字来声明 ( 但本质上还是一个局部变量 ), 如:</p>
+</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myTest</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">static</span> <span class="variable">$x</span>=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$x</span>;</span><br><span class="line">    <span class="variable">$x</span>++;</span><br><span class="line">    <span class="keyword">echo</span> PHP_EOL;    <span class="comment">// 换行符</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">myTest();</span><br><span class="line">myTest();</span><br><span class="line">myTest();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    如此, 则变量 <strong>x</strong> 在被调用结束后仍然会保留, 下一次调用时 <em>x</em> 的值为上次调用结束时的值</p>
+<ol start="4">
+<li><h3 id="echo-和-print-语句"><a href="#echo-和-print-语句" class="headerlink" title="echo 和 print 语句"></a><em>echo</em> 和 <em>print</em> 语句</h3><ol>
+<li><h4 id="echo"><a href="#echo" class="headerlink" title="echo"></a><strong>echo</strong></h4></li>
+<li><p><em>echo</em> 输出的速度更快, 没有返回值, 使用时可以自选加不加 <em>()</em></p>
+</li>
+</ol>
+</li>
+</ol>
+<p><strong>输出字符串</strong> (可以包含 <em>HTML</em> 标签)</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;h2&gt;差不多得了&lt;/h2&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;哈哈&quot;</span>, <span class="string">&quot;可以&quot;</span>, <span class="string">&quot;多个&quot;</span>, <span class="string">&quot;一起&quot;</span>, <span class="string">&quot;输出&quot;</span>, <span class="string">&quot;, 你就说行不行吧&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>输出变量和字符串</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$txt1</span>=<span class="string">&quot;我是菜鸟&quot;</span>;</span><br><span class="line"><span class="variable">$txt2</span>=<span class="string">&quot;想寄就寄&quot;</span>;</span><br><span class="line"><span class="variable">$php_love</span>=<span class="keyword">array</span>(<span class="string">&quot;PHP&quot;</span>, <span class="string">&quot;狗都&quot;</span>, <span class="string">&quot;不用&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$txt1</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;我,<span class="subst">$txt2</span>&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;<span class="subst">&#123;$php_love[0]&#125;</span> 是世界上最好的语言!&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-print"><a href="#2-print" class="headerlink" title="2. print"></a>2. <strong>print</strong></h4><p>​    <em>print</em> 有返回值，为 <em>1</em></p>
+<p><strong>输出字符串</strong>  (同样可以包含 <em>HTML</em> 标签)</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;&lt;h2&gt;差不多得了&lt;/h2&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;哈哈&quot;</span>;</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;一次只能&quot;</span>；</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;输出&quot;</span>；</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;一个&quot;</span>；</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;字符串捏&quot;</span>；</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="5">
+<li><h3 id="sprintf"><a href="#sprintf" class="headerlink" title="sprintf()"></a>sprintf()</h3><p>用于将 <em>%</em> 替换为一个参数进行传递变量并输出 (有点像<em>C/C++</em> 里面的 <em>printf</em>)</p>
+</li>
+</ol>
+<h2 id="一些高级一点的知识"><a href="#一些高级一点的知识" class="headerlink" title="一些高级一点的知识"></a>一些高级一点的知识</h2><hr>
+<ol>
+<li><h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><ol>
+<li><h4 id="类的定义"><a href="#类的定义" class="headerlink" title="类的定义"></a>类的定义</h4></li>
+</ol>
+<p>​    <strong>类</strong> 使用关键词 <em><strong>class</strong></em> 加类名进行定义 (<strong>类</strong> 中的定义、函数等的定义均和主函数中相同) , 定义方式如下: </p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">phpClass</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> <span class="variable">$var1</span>;</span><br><span class="line">  <span class="keyword">var</span> <span class="variable">$var2</span> = <span class="string">&quot;constant string&quot;</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">myfunc</span> (<span class="params"><span class="variable">$arg1</span>, <span class="variable">$arg2</span></span>) </span>&#123;</span><br><span class="line">     [..]</span><br><span class="line">  &#125;</span><br><span class="line">  [..]</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<ol start="2">
+<li><h3 id="gt-gt-和-this-self-parent"><a href="#gt-gt-和-this-self-parent" class="headerlink" title="-&gt; =&gt; :: 和  this self parent"></a><strong>-&gt; =&gt; ::</strong> 和  <strong>this self parent</strong></h3><ol>
+<li><h4 id="this-self-parent"><a href="#this-self-parent" class="headerlink" title="**this  self  parent **"></a>**this  self  parent **</h4></li>
+</ol>
+<h5 id="this"><a href="#this" class="headerlink" title="this:"></a><strong>this</strong>:</h5><p>​    即, <strong>当前对象</strong>  例:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">$this</span> -&gt; name;</span><br><span class="line"><span class="keyword">$this</span> -&gt; name();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Website</span></span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">$this</span> -&gt; name = <span class="variable">$name</span>;</span><br><span class="line">            <span class="keyword">$this</span> -&gt; name();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">name</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="keyword">$this</span> -&gt; name.<span class="string">&#x27;&lt;br&gt;&#x27;</span>;</span><br><span class="line">            <span class="keyword">$this</span> -&gt; url();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">url</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&#x27;http://c.biancheng.net/php/&lt;br&gt;&#x27;</span>;</span><br><span class="line">            <span class="keyword">$this</span> -&gt; title();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">title</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&#x27;PHP入门教程&lt;br&gt;&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$object</span> = <span class="keyword">new</span> Website(<span class="string">&#x27;C语言中文网&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>​    第一句访问当前成员的 <em>name</em> 属性, 第二句对当前成员调用类中的 <em>name()</em> 方法 (即调用函数)</p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><ol start="2">
+<li><h4 id="gt-gt"><a href="#gt-gt" class="headerlink" title="**-&gt; =&gt; :: **"></a>**-&gt; =&gt; :: **</h4></li>
+</ol>
+<h5 id="gt-插入式解引用操作符"><a href="#gt-插入式解引用操作符" class="headerlink" title="-&gt; (插入式解引用操作符)"></a><strong>-&gt; (插入式解引用操作符)</strong></h5><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$a</span>-&gt;b</span><br></pre></td></tr></table></figure>
+
+<p>​    取对象 <strong>a</strong> 的 <strong>b</strong> 属性</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$a</span>-&gt;b(<span class="variable">$c</span>)</span><br></pre></td></tr></table></figure>
+
+<p>​    调用对象 <strong>a</strong> 的 <strong>b</strong> 方法, 方法中传入一个参数 <strong>$c</strong> </p>
+<h5 id="gt-在数组中用"><a href="#gt-在数组中用" class="headerlink" title="**=&gt; (在数组中用) **"></a>**=&gt; (在数组中用) **</h5><p>用于操作数组中的数据: </p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$phparr</span>= <span class="keyword">new</span> <span class="keyword">array</span>( in =&gt; <span class="string">&#x27;reply,&#x27;</span></span><br><span class="line">side =&gt; <span class="string">&#x27;left&#x27;</span>,</span><br><span class="line">padx =&gt; <span class="number">2</span>m,</span><br><span class="line">pady =&gt; <span class="number">2</span>m,</span><br><span class="line">ipadx =&gt; <span class="number">2</span>m,</span><br><span class="line">ipady =&gt; <span class="number">1</span>m</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="范围解释操作符-域运算符"><a href="#范围解释操作符-域运算符" class="headerlink" title=":: ( 范围解释操作符 / 域运算符 )**"></a>:: ( 范围解释操作符 / 域运算符 )**</h5><p>​    用于调用类的 <strong>内部静态成员</strong> 或者 <strong>类之间</strong> 的调用:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>PHP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PY入门笔记</title>
     <url>/2021/10/30/PY%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<blockquote>
@@ -401,102 +497,6 @@
       <tags>
         <tag>CTF</tag>
         <tag>WP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PHP学习笔记</title>
-    <url>/2021/11/05/PHP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h2 id="一些基础知识"><a href="#一些基础知识" class="headerlink" title="一些基础知识"></a>一些基础知识</h2><span id="more"></span>
-
-<ol>
-<li><h3 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h3><p><em>PHP</em> 变量由 <strong>$</strong> 符号开始, 后跟着变量名称, 且 <strong>不用事先声明</strong> , 如: </p>
-</li>
-</ol>
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$txt</span>=<span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line"><span class="variable">$x</span>=<span class="number">5</span>;</span><br><span class="line"><span class="variable">$y</span>=<span class="variable">$x</span>*<span class="number">2</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$txe</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$y</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><h3 id="Global-关键字"><a href="#Global-关键字" class="headerlink" title="Global 关键字"></a><strong>Global 关键字</strong></h3></li>
-</ol>
-<p>   <em>global</em> 关键字用于函数内访问全局变量, 如</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$x</span>=<span class="number">5</span>;</span><br><span class="line"><span class="variable">$y</span>=<span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myTest</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">global</span> <span class="variable">$x</span>,<span class="variable">$y</span>;</span><br><span class="line">	<span class="variable">$y</span>=<span class="variable">$x</span>+<span class="variable">$y</span>;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    或者可以这样写:</span></span><br><span class="line"><span class="comment">    $GLOBAL[&#x27;y&#x27;]=$GLOBAL[&#x27;x&#x27;]+$GLOBAL[&#x27;y&#x27;];</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">myTest();</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$y</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>​    输出为</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="number">15</span></span><br></pre></td></tr></table></figure>
-
-<p>​    <em>php</em> 将所有的全局变量存储在 名为 <em>GLOBAL</em> 的数组中, 则可以写成第二种写法</p>
-<ol start="3">
-<li><h3 id="static-关键字"><a href="#static-关键字" class="headerlink" title="static 关键字"></a><strong>static</strong> 关键字</h3><p>若希望局部变量不被删除, 则需要使用 <em>static</em> 关键字来声明 ( 但本质上还是一个局部变量 ), 如:</p>
-</li>
-</ol>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myTest</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">static</span> <span class="variable">$x</span>=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$x</span>;</span><br><span class="line">    <span class="variable">$x</span>++;</span><br><span class="line">    <span class="keyword">echo</span> PHP_EOL;    <span class="comment">// 换行符</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">myTest();</span><br><span class="line">myTest();</span><br><span class="line">myTest();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>​    如此, 则变量 <strong>x</strong> 在被调用结束后仍然会保留, 下一次调用时 <em>x</em> 的值为上次调用结束时的值</p>
-<ol start="4">
-<li><h3 id="echo-和-print-语句"><a href="#echo-和-print-语句" class="headerlink" title="echo 和 print 语句"></a><em>echo</em> 和 <em>print</em> 语句</h3><ol>
-<li><h4 id="echo"><a href="#echo" class="headerlink" title="echo"></a><strong>echo</strong></h4></li>
-<li><p><em>echo</em> 输出的速度更快, 没有返回值, 使用时可以自选加不加 <em>()</em></p>
-</li>
-</ol>
-</li>
-</ol>
-<p><strong>输出字符串</strong> (可以包含 <em>HTML</em> 标签)</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;h2&gt;差不多得了&lt;/h2&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;哈哈&quot;</span>, <span class="string">&quot;可以&quot;</span>, <span class="string">&quot;多个&quot;</span>, <span class="string">&quot;一起&quot;</span>, <span class="string">&quot;输出&quot;</span>, <span class="string">&quot;, 你就说行不行吧&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>输出变量和字符串</strong></p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$txt1</span>=<span class="string">&quot;我是菜鸟&quot;</span>;</span><br><span class="line"><span class="variable">$txt2</span>=<span class="string">&quot;想寄就寄&quot;</span>;</span><br><span class="line"><span class="variable">$php_love</span>=<span class="keyword">array</span>(<span class="string">&quot;PHP&quot;</span>, <span class="string">&quot;狗都&quot;</span>, <span class="string">&quot;不用&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$txt1</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;我,<span class="subst">$txt2</span>&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;<span class="subst">&#123;$php_love[0]&#125;</span> 是世界上最好的语言!&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="2-print"><a href="#2-print" class="headerlink" title="2. print"></a>2. <strong>print</strong></h4><p>​    <em>print</em> 有返回值，为 <em>1</em></p>
-<p><strong>输出字符串</strong>  (同样可以包含 <em>HTML</em> 标签)</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;&lt;h2&gt;差不多得了&lt;/h2&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;哈哈&quot;</span>;</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;一次只能&quot;</span>；</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;输出&quot;</span>；</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;一个&quot;</span>；</span><br><span class="line"><span class="keyword">print</span> <span class="string">&quot;字符串捏&quot;</span>；</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="5">
-<li><h3 id="sprintf"><a href="#sprintf" class="headerlink" title="sprintf()"></a>sprintf()</h3><p>用于将 <em>%</em> 替换为一个参数进行传递变量并输出 (有点像<em>C/C++</em> 里面的 <em>printf</em>)</p>
-</li>
-</ol>
-<h2 id="一些高级一点的知识"><a href="#一些高级一点的知识" class="headerlink" title="一些高级一点的知识"></a>一些高级一点的知识</h2><hr>
-<ol>
-<li><h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><ol>
-<li><h4 id="类的定义"><a href="#类的定义" class="headerlink" title="类的定义"></a>类的定义</h4></li>
-</ol>
-<p>​    <strong>类</strong> 使用关键词 <em><strong>class</strong></em> 加类名进行定义 (<strong>类</strong> 中的定义、函数等的定义均和主函数中相同) , 定义方式如下: </p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">phpClass</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> <span class="variable">$var1</span>;</span><br><span class="line">  <span class="keyword">var</span> <span class="variable">$var2</span> = <span class="string">&quot;constant string&quot;</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">myfunc</span> (<span class="params"><span class="variable">$arg1</span>, <span class="variable">$arg2</span></span>) </span>&#123;</span><br><span class="line">     [..]</span><br><span class="line">  &#125;</span><br><span class="line">  [..]</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<hr>
-<ol start="2">
-<li><h3 id="gt-gt-和-this-self-parent"><a href="#gt-gt-和-this-self-parent" class="headerlink" title="-&gt; =&gt; :: 和  this self parent"></a><strong>-&gt; =&gt; ::</strong> 和  <strong>this self parent</strong></h3><ol>
-<li><h4 id="this-self-parent"><a href="#this-self-parent" class="headerlink" title="**this  self  parent **"></a>**this  self  parent **</h4></li>
-</ol>
-<h5 id="this"><a href="#this" class="headerlink" title="this:"></a><strong>this</strong>:</h5><p>​    即, <strong>当前对象</strong>  例:</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">$this</span> -&gt; name;</span><br><span class="line"><span class="keyword">$this</span> -&gt; name();</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Website</span></span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">$this</span> -&gt; name = <span class="variable">$name</span>;</span><br><span class="line">            <span class="keyword">$this</span> -&gt; name();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">name</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="keyword">$this</span> -&gt; name.<span class="string">&#x27;&lt;br&gt;&#x27;</span>;</span><br><span class="line">            <span class="keyword">$this</span> -&gt; url();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">url</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&#x27;http://c.biancheng.net/php/&lt;br&gt;&#x27;</span>;</span><br><span class="line">            <span class="keyword">$this</span> -&gt; title();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">title</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&#x27;PHP入门教程&lt;br&gt;&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$object</span> = <span class="keyword">new</span> Website(<span class="string">&#x27;C语言中文网&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>​    第一句访问当前成员的 <em>name</em> 属性, 第二句对当前成员调用类中的 <em>name()</em> 方法 (即调用函数)</p>
-<h4 id=""><a href="#" class="headerlink" title=""></a></h4><ol start="2">
-<li><h4 id="gt-gt"><a href="#gt-gt" class="headerlink" title="**-&gt; =&gt; :: **"></a>**-&gt; =&gt; :: **</h4></li>
-</ol>
-<h5 id="gt-插入式解引用操作符"><a href="#gt-插入式解引用操作符" class="headerlink" title="-&gt; (插入式解引用操作符)"></a><strong>-&gt; (插入式解引用操作符)</strong></h5><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$a</span>-&gt;b</span><br></pre></td></tr></table></figure>
-
-<p>​    取对象 <strong>a</strong> 的 <strong>b</strong> 属性</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$a</span>-&gt;b(<span class="variable">$c</span>)</span><br></pre></td></tr></table></figure>
-
-<p>​    调用对象 <strong>a</strong> 的 <strong>b</strong> 方法, 方法中传入一个参数 <strong>$c</strong> </p>
-<h5 id="gt-在数组中用"><a href="#gt-在数组中用" class="headerlink" title="**=&gt; (在数组中用) **"></a>**=&gt; (在数组中用) **</h5><p>用于操作数组中的数据: </p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$phparr</span>= <span class="keyword">new</span> <span class="keyword">array</span>( in =&gt; <span class="string">&#x27;reply,&#x27;</span></span><br><span class="line">side =&gt; <span class="string">&#x27;left&#x27;</span>,</span><br><span class="line">padx =&gt; <span class="number">2</span>m,</span><br><span class="line">pady =&gt; <span class="number">2</span>m,</span><br><span class="line">ipadx =&gt; <span class="number">2</span>m,</span><br><span class="line">ipady =&gt; <span class="number">1</span>m</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="范围解释操作符-域运算符"><a href="#范围解释操作符-域运算符" class="headerlink" title=":: ( 范围解释操作符 / 域运算符 )**"></a>:: ( 范围解释操作符 / 域运算符 )**</h5><p>​    用于调用类的 <strong>内部静态成员</strong> 或者 <strong>类之间</strong> 的调用:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
