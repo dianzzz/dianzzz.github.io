@@ -171,10 +171,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-12-13 23:43:38 / 修改时间：23:44:38" itemprop="dateCreated datePublished" datetime="2021-12-13T23:43:38+08:00">2021-12-13</time>
+              <time title="创建时间：2021-12-13 23:43:38" itemprop="dateCreated datePublished" datetime="2021-12-13T23:43:38+08:00">2021-12-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-14 00:33:44" itemprop="dateModified" datetime="2021-12-14T00:33:44+08:00">2021-12-14</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -182,7 +188,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>11</span>
+              <span>416</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -204,6 +210,31 @@
           <blockquote>
 <p>又是一次坐牢 :yum:</p>
 </blockquote>
+<ul>
+<li><strong>odd_upload</strong></li>
+<li><strong>Easyinject</strong></li>
+</ul>
+<p>(后面的题再说吧, 今天估计也只写得完第一道, 线代纯杀人, 题目环境还没了哈哈)</p>
+<h2 id="odd-upload"><a href="#odd-upload" class="headerlink" title="odd_upload"></a>odd_upload</h2><blockquote>
+<p>唯一做出来的一道题, 彳亍</p>
+</blockquote>
+<p>​    打开页面之后看到这个</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/V-T3bgnTlH_pLU4SBwNYZw.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/3h1ZdHQ2pUWe6K9RbLujDw.png" alt="img"></p>
+<p>​    捕捉到关键词 <strong>smarty</strong>, 开始 <em>Google hack</em>  对了, 题目里面还有一句提示 “目录与官方exp中相同”</p>
+<p>​    贴一下 <a target="_blank" rel="noopener" href="https://www.smarty.net/docs/zh_CN/"><em>Smarty3</em>官方手册</a> , 然后在里面搜到 “目录文件结构”, 看到这个</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211214000711689.png" alt="image-20211214000711689"></p>
+<p>​    开始的时候拿到这个也不知道有啥用, 搜索一下 <em><a target="_blank" rel="noopener" href="https://docs.formtools.org/module_development/file_index_tpl/">index.tpl</a></em>, 有这么一句话</p>
+<blockquote>
+<p>All HTML within Form Tools is generated through the Smarty template language.</p>
+</blockquote>
+<p>​    (具体用法文档里面有)</p>
+<p>​    再结合那个文件上传, 可以想到是通过替换 <em>index.tpl</em> 来控制界面</p>
+<p>​    访问 <em>/ templates/index.tpl</em> 能看到<em>tpl</em>文件的源码, <em>copy</em> 下来然后 <em>ls cd cat</em> 一套带走就行了</p>
+<p style="text-align:center;"><del> 好水的一道题, 我还做了半天哈哈 </del> 真铸币</p>
+
+<hr>
+<p>​    </p>
 
       
     </div>
