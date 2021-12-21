@@ -148,6 +148,121 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/21/SQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="店長">
+      <meta itemprop="description" content="背灯和月就花阴，已是十年踪迹十年心。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="摸鱼小店">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/21/SQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">SQL学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-21 23:52:05" itemprop="dateCreated datePublished" datetime="2021-12-21T23:52:05+08:00">2021-12-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-22 00:47:31" itemprop="dateModified" datetime="2021-12-22T00:47:31+08:00">2021-12-22</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>153</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="基础命令-概览"><a href="#基础命令-概览" class="headerlink" title="基础命令(概览)"></a>基础命令(概览)</h2><ul>
+<li><em>create table</em> 建表        (贴一下<a target="_blank" rel="noopener" href="https://www.runoob.com/sql/sql-datatypes.html">数据类型</a>有哪些)</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> table_name		# 建一张名字为table_name 的表</span><br><span class="line">(</span><br><span class="line">column_name1 data_type(size),	</span><br><span class="line">    # 建列, 名字为column_name1,数据类型为data_type,列中数据最大长度为size</span><br><span class="line">column_name2 data_type(size),</span><br><span class="line">...</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><em>alter table</em> 修改表的结构 (感觉有点像声明一样)    </li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> table_name		# table_name为当前表名</span><br><span class="line"><span class="keyword">add</span> column_name datatype	# 在表中加一列,数据类型为<span class="string">&#x27;datatype&#x27;</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> table_name</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">column</span> column_name		# 删掉表中名字为<span class="string">&#x27;column_name&#x27;</span>的列</span><br><span class="line"><span class="comment">---------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> table_name</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">column</span> column_name datatype	# 修改表中数据类型  (<span class="keyword">SQL</span> Server<span class="operator">/</span>MS Access 用)</span><br><span class="line"><span class="comment">---------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> table_name</span><br><span class="line">modify <span class="keyword">column</span> column_name datatype	# 同上 (MySQL Oracle 用)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><em>insert into</em> 向表中增加记录</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 有两种形式</span><br><span class="line"># <span class="number">1.</span>不指定列,只提供值</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> table_name</span><br><span class="line"><span class="keyword">values</span> (value1,value2,...);		# 直接按顺序增加</span><br><span class="line"></span><br><span class="line"># <span class="number">2.</span>指定列插入所提供值</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> table_name (column1,column2,...)</span><br><span class="line"><span class="keyword">values</span> (value1,value2,...);		# 一一对应</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><em>select</em> 用于从数据库中选取数据, 结果被存在一张结果表中, 称为结果集</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 两种</span><br><span class="line"># <span class="number">1.</span>指定列</span><br><span class="line"><span class="keyword">select</span> column_name1,column_name2</span><br><span class="line"><span class="keyword">from</span> table_name;		#从table_name这张表中选取column_name1和column_name2中的数据</span><br><span class="line"></span><br><span class="line"># <span class="number">2.</span>所有列</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> table_name;	#选取table_name中所有列中的数据</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><em>delete</em> 用于删除表中的行</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 仍然是两种</span><br><span class="line"># <span class="number">1.</span>全删</span><br><span class="line"><span class="keyword">delete</span> (<span class="operator">*</span>) <span class="keyword">from</span> table_name		# 括号中的<span class="operator">*</span>可要可不要</span><br><span class="line"></span><br><span class="line"># <span class="number">2.</span>指定删除</span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> table_name</span><br><span class="line"><span class="keyword">where</span> a<span class="operator">=</span><span class="string">&#x27;b&#x27;</span> <span class="keyword">and</span> c<span class="operator">=</span><span class="string">&#x27;d&#x27;</span>			# 删除a列值为b且c列值为d的一行 (<span class="keyword">and</span>还能追加)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><em>update</em> 用于更新表中记录</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># <span class="number">2</span></span><br><span class="line"># <span class="number">1.</span>全改</span><br><span class="line">update table_name</span><br><span class="line"><span class="keyword">set</span> a<span class="operator">=</span><span class="string">&#x27;b&#x27;</span>, c<span class="operator">=</span><span class="string">&#x27;d&#x27;</span>		# 把a列所有值改成b,c列所有值改成d</span><br><span class="line"></span><br><span class="line"># <span class="number">2.</span>指定</span><br><span class="line">update table_name </span><br><span class="line"><span class="keyword">set</span> a<span class="operator">=</span><span class="string">&#x27;b&#x27;</span>,c<span class="operator">=</span><span class="string">&#x27;d&#x27;</span></span><br><span class="line"><span class="keyword">where</span> e<span class="operator">=</span><span class="string">&#x27;f&#x27;</span>			# 将e列中值为f的一行的a列的值改为b、c列的值改为d</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><em>drop table</em> 删表<del>跑路</del> </li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 最危险的工作, 往往只需要最简单的语法</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> table_name	# 删掉名字为table_name 的表</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/13/%E4%B8%9C%E8%BD%AF%E6%9D%AFwp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -955,88 +1070,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/09/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="店長">
-      <meta itemprop="description" content="背灯和月就花阴，已是十年踪迹十年心。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="摸鱼小店">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/09/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-09 21:11:11" itemprop="dateCreated datePublished" datetime="2021-10-09T21:11:11+08:00">2021-10-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-25 15:39:18" itemprop="dateModified" datetime="2021-10-25T15:39:18+08:00">2021-10-25</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>34</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>就一篇Hello World你还要看啊 :sweat_smile:</p>
-<p><em><strong>没 🌶</strong></em></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -1101,7 +1139,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1112,7 +1150,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
