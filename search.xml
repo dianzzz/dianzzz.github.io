@@ -795,6 +795,46 @@
 ]]></content>
   </entry>
   <entry>
+    <title>东软杯wp</title>
+    <url>/2021/12/13/%E4%B8%9C%E8%BD%AF%E6%9D%AFwp/</url>
+    <content><![CDATA[<blockquote>
+<p>又是一次坐牢 :yum:</p>
+</blockquote>
+<ul>
+<li><strong>flag</strong> (大水签到题就不放wp了, 直接用<em>Ctrl+F</em> 挨个找都行)</li>
+<li><strong>odd_upload</strong></li>
+<li><strong>Easyinject</strong></li>
+</ul>
+<p>(后面的题再说吧, 今天估计也只写得完第一道, 线代纯杀人, 题目环境还没了哈哈)</p>
+<span id="more"></span>
+
+<h2 id="odd-upload"><a href="#odd-upload" class="headerlink" title="odd_upload"></a>odd_upload</h2><blockquote>
+<p>唯一做出来的一道题, 彳亍</p>
+</blockquote>
+<p>​    打开页面之后看到这个</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/V-T3bgnTlH_pLU4SBwNYZw.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/3h1ZdHQ2pUWe6K9RbLujDw.png" alt="img"></p>
+<p>​    捕捉到关键词 <strong>smarty</strong>, 开始 <em>Google hack</em>  对了, 题目里面还有一句提示 “目录与官方exp中相同”</p>
+<p>​    贴一下 <a href="https://www.smarty.net/docs/zh_CN/"><em>Smarty3</em>官方手册</a> , 然后在里面搜到 “目录文件结构”, 看到这个</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211214000711689.png" alt="image-20211214000711689"></p>
+<p>​    开始的时候拿到这个也不知道有啥用, 搜索一下 <em><a href="https://docs.formtools.org/module_development/file_index_tpl/">index.tpl</a></em>, 有这么一句话</p>
+<blockquote>
+<p>All HTML within Form Tools is generated through the Smarty template language.</p>
+</blockquote>
+<p>​    (具体用法文档里面有)</p>
+<p>​    再结合那个文件上传, 可以想到是通过替换 <em>index.tpl</em> 来控制界面</p>
+<p>​    访问 <em>/ templates/index.tpl</em> 能看到<em>tpl</em>文件的源码, <em>copy</em> 下来然后 <em>ls cd cat</em> 一套带走就行了</p>
+<p style="text-align:center;"><del> 好水的一道题, 我还做了半天哈哈 </del> 真铸币</p>
+
+<hr>
+<p>​    </p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>wp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>反序列化学习</title>
     <url>/2021/11/04/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<blockquote>
@@ -938,46 +978,6 @@
       <tags>
         <tag>笔记</tag>
         <tag>反序列化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>东软杯wp</title>
-    <url>/2021/12/13/%E4%B8%9C%E8%BD%AF%E6%9D%AFwp/</url>
-    <content><![CDATA[<blockquote>
-<p>又是一次坐牢 :yum:</p>
-</blockquote>
-<ul>
-<li><strong>flag</strong> (大水签到题就不放wp了, 直接用<em>Ctrl+F</em> 挨个找都行)</li>
-<li><strong>odd_upload</strong></li>
-<li><strong>Easyinject</strong></li>
-</ul>
-<p>(后面的题再说吧, 今天估计也只写得完第一道, 线代纯杀人, 题目环境还没了哈哈)</p>
-<span id="more"></span>
-
-<h2 id="odd-upload"><a href="#odd-upload" class="headerlink" title="odd_upload"></a>odd_upload</h2><blockquote>
-<p>唯一做出来的一道题, 彳亍</p>
-</blockquote>
-<p>​    打开页面之后看到这个</p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/V-T3bgnTlH_pLU4SBwNYZw.png" alt="img"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/3h1ZdHQ2pUWe6K9RbLujDw.png" alt="img"></p>
-<p>​    捕捉到关键词 <strong>smarty</strong>, 开始 <em>Google hack</em>  对了, 题目里面还有一句提示 “目录与官方exp中相同”</p>
-<p>​    贴一下 <a href="https://www.smarty.net/docs/zh_CN/"><em>Smarty3</em>官方手册</a> , 然后在里面搜到 “目录文件结构”, 看到这个</p>
-<p><img src="https://cdn.jsdelivr.net/gh/dianzzz/dzimg/data/image-20211214000711689.png" alt="image-20211214000711689"></p>
-<p>​    开始的时候拿到这个也不知道有啥用, 搜索一下 <em><a href="https://docs.formtools.org/module_development/file_index_tpl/">index.tpl</a></em>, 有这么一句话</p>
-<blockquote>
-<p>All HTML within Form Tools is generated through the Smarty template language.</p>
-</blockquote>
-<p>​    (具体用法文档里面有)</p>
-<p>​    再结合那个文件上传, 可以想到是通过替换 <em>index.tpl</em> 来控制界面</p>
-<p>​    访问 <em>/ templates/index.tpl</em> 能看到<em>tpl</em>文件的源码, <em>copy</em> 下来然后 <em>ls cd cat</em> 一套带走就行了</p>
-<p style="text-align:center;"><del> 好水的一道题, 我还做了半天哈哈 </del> 真铸币</p>
-
-<hr>
-<p>​    </p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>wp</tag>
       </tags>
   </entry>
 </search>
